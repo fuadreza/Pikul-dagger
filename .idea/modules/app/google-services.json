@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "342287242815",
+    "firebase_url": "https://pikul-2023a.firebaseio.com",
+    "project_id": "pikul-2023a",
+    "storage_bucket": "pikul-2023a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342287242815:android:64a257dbee19eb06",
+        "android_client_info": {
+          "package_name": "io.github.fuadreza.pikul"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342287242815-j99bbji0m91t39rgcshdpp5acg5tpc4g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.github.fuadreza.pikul",
+            "certificate_hash": "bb6f93417598165f09d73f88f65665c314bc4c54"
+          }
+        },
+        {
+          "client_id": "342287242815-d2s89nku9ggehs7ujvu3chj2d15tgccm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNnUIJiun0Cn7tPl4O13-rI9mJbDh9cUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342287242815-d2s89nku9ggehs7ujvu3chj2d15tgccm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
