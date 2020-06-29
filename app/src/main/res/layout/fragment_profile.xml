@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_univ"
+        android:text="@string/title_profile"
         android:textColor="@color/light"
         android:textSize="21sp"
         android:textStyle="bold"
@@ -60,7 +60,8 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/content_description"
-                android:src="@drawable/rounded"
+                android:src="@drawable/ic_profile"
+                android:tint="@color/lightBlack"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

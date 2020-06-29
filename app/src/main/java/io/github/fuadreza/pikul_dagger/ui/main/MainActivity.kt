@@ -24,6 +24,9 @@ class MainActivity : AppCompatActivity() {
     //@Inject
     //lateinit var mainViewModel: MainViewModel
 
+    @Inject
+    lateinit var userManager : UserManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         //(application as PikulApp).appComponent.inject(this)
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
 
-        val userManager = (application as PikulApp).appComponent.userManager()
+        userManager = (application as PikulApp).appComponent.userManager()
 
         if (!userManager.isUserLoggedIn()) {
             Log.d("STATUS LOGIN", "NO LOGIN")
@@ -41,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("STATUS LOGIN", "SUDAH LOGIN")
             setContentView(R.layout.activity_main)
 
-            userManager.userComponent!!.inject(this)
+            //userManager.userComponent!!.inject(this)
             setupViews()
         }
     }
@@ -52,23 +55,24 @@ class MainActivity : AppCompatActivity() {
         navigation_menu.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.tes -> {
-                replaceFragment(TesFragment())
-                return@OnNavigationItemSelectedListener true
+    private val mOnNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.tes -> {
+                    replaceFragment(TesFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.universitas -> {
+                    replaceFragment(UnivFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.profile -> {
+                    replaceFragment(ProfileFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
             }
-            R.id.universitas -> {
-                replaceFragment(UnivFragment())
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.profile -> {
-                replaceFragment(ProfileFragment())
-                return@OnNavigationItemSelectedListener true
-            }
+            false
         }
-        false
-    }
 
     private fun replaceFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()

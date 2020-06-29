@@ -1,12 +1,7 @@
 package io.github.fuadreza.pikul_dagger.repository.user
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.UserProfileChangeRequest
-import io.github.fuadreza.pikul_dagger.ui.login.LoginViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -23,9 +18,13 @@ class UserManager @Inject constructor(
     var userComponent: UserComponent? = null
         private set
 
-    var user: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+    val firebaseAuth = FirebaseAuth.getInstance()
 
-    fun isUserLoggedIn() = userComponent != null
+    var user: FirebaseUser? = firebaseAuth.currentUser
+
+    fun isUserLoggedIn(): Boolean {
+        return user != null
+    }
 
     fun userJustLoggedIn() {
         userComponent = userComponentFactory.create()
