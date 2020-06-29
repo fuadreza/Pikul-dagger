@@ -1,6 +1,7 @@
 package io.github.fuadreza.pikul_dagger.repository.user
 
 import dagger.Subcomponent
+import io.github.fuadreza.pikul_dagger.ui.login.LoginActivity
 import io.github.fuadreza.pikul_dagger.ui.main.MainActivity
 
 /**
@@ -18,4 +19,6 @@ interface UserComponent {
     }
 
     fun inject(activity: MainActivity)
+
+    fun inject(activity: LoginActivity)
 }

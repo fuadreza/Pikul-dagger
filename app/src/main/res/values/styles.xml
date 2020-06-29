@@ -7,4 +7,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SplashTheme.FullScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/secondary</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:textViewStyle">@style/ProductSansStyle</item>
+    </style>
+
+    <style name="ProductSansStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/productsans</item>
+    </style>
+    
+    <style name="MaterialTheme" parent="Theme.MaterialComponents.Light">
+        <item name="android:textColor">@color/lightBlack</item>
+    </style>
+
 </resources>

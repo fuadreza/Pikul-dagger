@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Pikul</string>
+
+    <string name="title_tes">Tes Penjurusan</string>
+    <string name="title_univ">Universitas</string>
+
+    <string name="cari_univ">Cari Universitas</string>
+
+    <string name="rekomendasi_jurusan">Rekomendasi Jurusan</string>
+    <string name="content_description">Gambar</string>
+    <string name="title_login">Login</string>
+    <string name="google">Google</string>
 </resources>
