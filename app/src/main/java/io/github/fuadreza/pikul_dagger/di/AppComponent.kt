@@ -6,6 +6,7 @@ import dagger.Component
 import io.github.fuadreza.pikul_dagger.repository.user.UserManager
 import io.github.fuadreza.pikul_dagger.ui.login.LoginComponent
 import io.github.fuadreza.pikul_dagger.ui.main.MainActivity
+import io.github.fuadreza.pikul_dagger.ui.register.RegisterComponent
 import javax.inject.Singleton
 
 /**
@@ -23,6 +24,8 @@ interface AppComponent {
     }
 
     fun loginComponent(): LoginComponent.Factory
+
+    fun registerComponent(): RegisterComponent.Factory
 
     fun userManager(): UserManager
 

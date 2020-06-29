@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import io.github.fuadreza.pikul_dagger.PikulApp
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.ui.main.MainActivity
-import io.github.fuadreza.pikul_dagger.ui.main.MainViewModel
+import io.github.fuadreza.pikul_dagger.ui.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
 
@@ -50,6 +50,9 @@ class LoginActivity : AppCompatActivity() {
     private fun setupViews() {
         btn_login.setOnClickListener {
             loginViewModel.login(edEmail.text.toString(), edPassword.text.toString())
+        }
+        tv_register.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 

@@ -50,6 +50,7 @@ class LoginViewModel @Inject constructor(private val userManager: UserManager) {
         }
 
         _loginState.value = LoginViewState.IsLoading(false)
+
     }
 
     fun validate(email: String, password: String): Boolean{

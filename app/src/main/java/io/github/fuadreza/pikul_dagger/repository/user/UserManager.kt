@@ -27,44 +27,6 @@ class UserManager @Inject constructor(
 
     fun isUserLoggedIn() = userComponent != null
 
-    fun registerUser(name: String, email: String, password: String) {
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                val user = FirebaseAuth.getInstance().currentUser
-                val profileUpdate = UserProfileChangeRequest.Builder()
-                    .setDisplayName(name)
-                    .build()
-
-                user?.updateProfile(profileUpdate)
-
-
-            }.addOnFailureListener {
-                Log.d("REGISTER", "Gagal membuat akun: ${it.message}")
-
-            }
-    }
-
-    fun loginUser(email: String, password: String) {
-        /*_loginState.value = LoginViewState.IsLoading(true)
-        //var login = true
-
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                Log.d("LOGIN", "Success Login")
-
-            }
-            .addOnFailureListener {
-                Log.d("LOGIN", "Failed Login: ${it.message}")
-
-            }
-
-        _loginState.value = LoginViewState.IsLoading(false)
-
-        userJustLoggedIn()
-        //return login*/
-
-    }
-
     fun userJustLoggedIn() {
         userComponent = userComponentFactory.create()
     }

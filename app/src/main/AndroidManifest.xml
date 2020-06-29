@@ -21,6 +21,7 @@
 
         </activity>
         <activity android:name="io.github.fuadreza.pikul_dagger.ui.login.LoginActivity"/>
+        <activity android:name=".ui.register.RegisterActivity"/>
     </application>
 
 </manifest>
