@@ -2,7 +2,7 @@ package io.github.fuadreza.pikul_dagger.repository.user
 
 import dagger.Subcomponent
 import io.github.fuadreza.pikul_dagger.ui.login.LoginActivity
-import io.github.fuadreza.pikul_dagger.ui.main.MainActivity
+import io.github.fuadreza.pikul_dagger.ui.main.HomeActivity
 
 /**
  * Dibuat dengan kerjakerasbagaiquda oleh Shifu pada tanggal 24/06/2020.
@@ -18,7 +18,7 @@ interface UserComponent {
         fun create(): UserComponent
     }
 
-    fun inject(activity: MainActivity)
+    fun inject(activity: HomeActivity)
 
     fun inject(activity: LoginActivity)
 }

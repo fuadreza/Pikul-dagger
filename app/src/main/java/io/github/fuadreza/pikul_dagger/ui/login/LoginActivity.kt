@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import io.github.fuadreza.pikul_dagger.PikulApp
 import io.github.fuadreza.pikul_dagger.R
-import io.github.fuadreza.pikul_dagger.ui.main.MainActivity
+import io.github.fuadreza.pikul_dagger.ui.main.HomeActivity
 import io.github.fuadreza.pikul_dagger.ui.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import javax.inject.Inject
@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
         when (it) {
             is LoginViewState.LoginSuccess -> {
                 Log.e("MASUK", "SUKSES")
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, HomeActivity::class.java))
                 finish()
             }
             is LoginViewState.LoginError -> {

@@ -18,7 +18,7 @@ class UserManager @Inject constructor(
     var userComponent: UserComponent? = null
         private set
 
-    val firebaseAuth = FirebaseAuth.getInstance()
+    private val firebaseAuth = FirebaseAuth.getInstance()
 
     var user: FirebaseUser? = firebaseAuth.currentUser
 
@@ -28,6 +28,12 @@ class UserManager @Inject constructor(
 
     fun userJustLoggedIn() {
         userComponent = userComponentFactory.create()
+    }
+
+    fun logoutUser(){
+        firebaseAuth.signOut()
+        user = null
+        userComponent = null
     }
 }
 

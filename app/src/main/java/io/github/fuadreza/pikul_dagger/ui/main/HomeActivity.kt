@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.github.fuadreza.pikul_dagger.PikulApp
 import io.github.fuadreza.pikul_dagger.R
+import io.github.fuadreza.pikul_dagger.repository.api.FirestoreService
 import io.github.fuadreza.pikul_dagger.repository.user.UserManager
 import io.github.fuadreza.pikul_dagger.ui.login.LoginActivity
 import io.github.fuadreza.pikul_dagger.ui.main.profile.ProfileFragment
@@ -16,7 +17,7 @@ import io.github.fuadreza.pikul_dagger.ui.main.univ.UnivFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
     //@Inject
     //lateinit var userManager: UserManager
@@ -25,11 +26,17 @@ class MainActivity : AppCompatActivity() {
     //lateinit var mainViewModel: MainViewModel
 
     @Inject
-    lateinit var userManager : UserManager
+    lateinit var userManager: UserManager
+
+    lateinit var homeComponent: HomeComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         //(application as PikulApp).appComponent.inject(this)
+
+        homeComponent = (application as PikulApp).appComponent.homeComponent().create()
+
+        homeComponent.inject(this)
 
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()

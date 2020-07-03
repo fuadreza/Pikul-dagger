@@ -10,6 +10,6 @@ import javax.inject.Inject
  *
  */
 
-class MainViewModel @Inject constructor(private val userManager: UserManager) {
+class HomeViewModel @Inject constructor(private val userManager: UserManager) {
 
 }

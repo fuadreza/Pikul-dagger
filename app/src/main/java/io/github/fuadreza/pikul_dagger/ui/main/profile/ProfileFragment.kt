@@ -1,6 +1,7 @@
 package io.github.fuadreza.pikul_dagger.ui.main.profile
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.UserManager
 import android.util.Log
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseUser
 import io.github.fuadreza.pikul_dagger.PikulApp
 import io.github.fuadreza.pikul_dagger.R
+import io.github.fuadreza.pikul_dagger.ui.setting.SettingActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.io.Serializable
 
@@ -38,18 +40,19 @@ class ProfileFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //val user : FirebaseUser? = arguments?.getParcelable("user")
-
         val userManager = (activity?.application as PikulApp).appComponent.userManager()
 
-        Log.d("PAKET" , "USER " + userManager.user?.displayName)
+        //Log.d("PAKET" , "USER " + userManager.user?.displayName)
 
-        setupViews(userManager.user)
+        setupViews(view, userManager.user)
     }
 
-    private fun setupViews(user: FirebaseUser?) {
+    private fun setupViews(view: View, user: FirebaseUser?) {
         tv_nama.text = user?.displayName
         tv_email.text = user?.email
+        btn_edit.setOnClickListener {
+            startActivity(Intent(view.context, SettingActivity::class.java))
+        }
     }
 
 }

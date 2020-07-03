@@ -42,6 +42,7 @@
         app:queryHint="@string/cari_univ" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_universitas"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_marginLeft="@dimen/panel_16dp"

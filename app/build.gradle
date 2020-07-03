@@ -80,6 +80,12 @@ dependencies {
 
     //Firebase
     implementation 'com.google.firebase:firebase-auth:19.3.1'
+    implementation 'com.google.firebase:firebase-database:19.3.1'
+    implementation 'com.google.firebase:firebase-firestore-ktx:21.4.3'
+
+    //groupie adapter
+    implementation "com.xwray:groupie:2.3.0"
+    implementation "com.xwray:groupie-kotlin-android-extensions:2.3.0"
 
     //Dagger
     def dagger_version = "2.27"
