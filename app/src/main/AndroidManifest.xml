@@ -23,6 +23,9 @@
         <activity android:name="io.github.fuadreza.pikul_dagger.ui.login.LoginActivity"/>
         <activity android:name=".ui.register.RegisterActivity"/>
         <activity android:name=".ui.setting.SettingActivity"/>
+        <activity android:name=".ui.tes.TesActivity"/>
+        <activity android:name=".ui.tes.detailtes.DetailTesActivity"/>
+
     </application>
 
 </manifest>

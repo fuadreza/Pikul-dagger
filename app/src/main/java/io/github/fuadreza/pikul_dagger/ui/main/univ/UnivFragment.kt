@@ -43,8 +43,6 @@ class UnivFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_univ, container, false)
 
-
-
         if(savedInstanceState == null) univViewModel.getAllUniversitas()
 
         observerUnivState()

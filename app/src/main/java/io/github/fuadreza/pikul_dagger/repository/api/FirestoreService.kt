@@ -15,11 +15,17 @@ import javax.inject.Singleton
 class FirestoreService @Inject constructor() {
     val database = FirebaseFirestore.getInstance()
 
-
     fun getAllUniversitas(): CollectionReference {
         val docRef = database.collection("universitas")
         return docRef
     }
+
+    fun getAllSoal(): CollectionReference {
+        val docRef = database.collection("soals")
+        return docRef
+    }
+
+
 
 }
 

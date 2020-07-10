@@ -11,4 +11,6 @@
     <string name="content_description">Gambar</string>
     <string name="title_login">Login</string>
     <string name="google">Google</string>
+    <string name="label_min">Sangat Tidak Suka</string>
+    <string name="label_max">Sangat Suka</string>
 </resources>

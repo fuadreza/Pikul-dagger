@@ -10,6 +10,7 @@ import io.github.fuadreza.pikul_dagger.ui.main.HomeComponent
 import io.github.fuadreza.pikul_dagger.ui.main.univ.UnivComponent
 import io.github.fuadreza.pikul_dagger.ui.register.RegisterComponent
 import io.github.fuadreza.pikul_dagger.ui.setting.SettingComponent
+import io.github.fuadreza.pikul_dagger.ui.tes.TesComponent
 import javax.inject.Singleton
 
 /**
@@ -33,6 +34,8 @@ interface AppComponent {
     fun settingComponent(): SettingComponent.Factory
 
     fun homeComponent(): HomeComponent.Factory
+
+    fun tesComponent(): TesComponent.Factory
 
     //fun univComponent(): UnivComponent.Factory
 

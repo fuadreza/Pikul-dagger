@@ -8,8 +8,9 @@ import kotlinx.android.parcel.Parcelize
  *
  */
 @Parcelize
-class SoalTes (
-    var kategori: String = "",
-    var soal: String = "",
-    var rasio: String = ""
+data class SoalTes (
+    var id_soal : String? = "",
+    var kategori: String? = "",
+    var rasio: String? = "",
+    var soal: String? = ""
 ): Parcelable
