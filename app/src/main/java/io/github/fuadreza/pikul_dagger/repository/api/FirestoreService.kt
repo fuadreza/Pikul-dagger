@@ -2,6 +2,7 @@ package io.github.fuadreza.pikul_dagger.repository.api
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,8 +16,10 @@ import javax.inject.Singleton
 class FirestoreService @Inject constructor() {
     val database = FirebaseFirestore.getInstance()
 
-    fun getAllUniversitas(): CollectionReference {
+    fun getAllUniversitas(): Query {
         val docRef = database.collection("universitas")
+            .orderBy("id")
+            .limit(25)
         return docRef
     }
 

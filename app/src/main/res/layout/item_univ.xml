@@ -1,28 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/panel_16dp"
-    android:orientation="vertical">
+    android:layout_height="120dp"
+    android:layout_marginBottom="16dp"
+    app:cardCornerRadius="8dp"
+    android:elevation="1dp">
 
-    <TextView
-        android:id="@+id/tv_univ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Universitas" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_akreditasi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        tools:text="A" />
+        <ImageView android:id="@+id/iv_logo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <TextView
-        android:id="@+id/tv_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="uuu.jpg" />
+        <TextView
+            android:id="@+id/tv_nama_univ"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:textSize="18sp"
+            android:layout_marginRight="16dp"
+            app:layout_constraintLeft_toRightOf="@id/iv_logo"
+            app:layout_constraintTop_toTopOf="@id/iv_logo"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:text="Universitas Gadjah Mada (Gadjah Mada University)" />
 
-</LinearLayout>
+        <TextView android:id="@+id/tvLabelAkreditasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Akreditasi :"
+            app:layout_constraintLeft_toLeftOf="@id/tv_nama_univ"
+            app:layout_constraintBottom_toBottomOf="@id/iv_logo"/>
+
+        <TextView android:id="@+id/tv_akreditasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            app:layout_constraintLeft_toRightOf="@id/tvLabelAkreditasi"
+            app:layout_constraintBottom_toBottomOf="@id/iv_logo"
+            tools:text="A"/>
+
+        <TextView
+            android:id="@+id/btn_lihat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:textColor="@color/primary"
+            android:text="Lihat >"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

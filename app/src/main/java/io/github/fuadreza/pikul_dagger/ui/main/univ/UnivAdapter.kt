@@ -14,9 +14,9 @@ import kotlinx.android.synthetic.main.item_univ.view.*
 class UnivAdapter (private val univ: Universitas): Item(){
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.apply {
-            tv_univ.text = univ.nama_univ
+            tv_nama_univ.text = univ.nama_univ
             tv_akreditasi.text = univ.akreditasi
-            tv_logo.text = univ.logo_url
+
         }
     }
 

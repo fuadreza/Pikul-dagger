@@ -23,6 +23,37 @@ class UnivViewModel @Inject constructor(private val repo: FirestoreService) : Vi
 
     fun getAllUniversitas(){
 
+        //Without limit
+        /*repo.getAllUniversitas().addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
+            if (e != null) {
+                allUniversitas.value = null
+                return@EventListener
+            }
+
+            val allUniversitasList : MutableList<Universitas> = mutableListOf()
+            for (doc in value!!) {
+                val universitasItem = doc.toObject(Universitas::class.java)
+                allUniversitasList.add(universitasItem)
+            }
+            allUniversitas.value = allUniversitasList
+            univState.value = UnivViewState.OnLoadUnivState(allUniversitasList)
+        })*/
+
+        //With limit
+        /*repo.getAllUniversitas().addOnSuccessListener { documentSnapshots ->
+            if(documentSnapshots != null){
+                allUniversitas.value = null
+                return@addOnSuccessListener
+            }
+
+            val allUniversitasList : MutableList<Universitas> = mutableListOf()
+            for (doc in documentSnapshots.documents){
+                val universitasItem = doc.toObject(Universitas::class.java)
+                allUniversitasList.add(universitasItem!!)
+            }
+            allUniversitas.value = allUniversitasList
+            univState.value = UnivViewState.OnLoadUnivState(allUniversitasList)
+        }*/
         repo.getAllUniversitas().addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
             if (e != null) {
                 allUniversitas.value = null

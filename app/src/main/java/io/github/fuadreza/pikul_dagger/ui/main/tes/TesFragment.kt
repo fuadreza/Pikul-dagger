@@ -7,9 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.ui.tes.TesActivity
 import kotlinx.android.synthetic.main.fragment_test.*
+import java.io.File
+import java.io.FileOutputStream
 
 /**
  * Dibuat dengan kerjakerasbagaiquda oleh Shifu pada tanggal 28/06/2020.
@@ -39,6 +44,31 @@ class TesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupViews()
+
+        /*val storage = Firebase.storage
+
+        val storageRef = storage.reference
+
+        val logoRef = storageRef.child("logo_univ/ugm.png")
+
+        val localFile = File.createTempFile("ugm", "png")*/
+
+        /*var file = File(context?.filesDir, "logo_univ")
+        if (!file.exists()) {
+            file.mkdir()
+        }
+        file = File(file, "ugm.png")
+        val out = FileOutputStream(file)
+        out.flush()
+        out.close()*/
+
+        /*logoRef.getFile(localFile).addOnSuccessListener {
+            Glide.with(this)
+                .load(localFile)
+                .into(iv_logo_tes)
+        }.addOnFailureListener{
+
+        }*/
     }
 
     private fun setupViews(){

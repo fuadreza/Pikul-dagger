@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/ProductSansStyle</item>
     </style>
 
     <style name="SplashTheme.FullScreen" parent="Theme.AppCompat.Light.NoActionBar">
@@ -22,6 +23,7 @@
     
     <style name="MaterialTheme" parent="Theme.MaterialComponents.Light">
         <item name="android:textColor">@color/lightBlack</item>
+        <item name="android:textViewStyle">@style/ProductSansStyle</item>
     </style>
 
 </resources>
