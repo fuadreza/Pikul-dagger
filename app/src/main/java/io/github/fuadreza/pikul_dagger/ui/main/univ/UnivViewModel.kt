@@ -1,12 +1,17 @@
 package io.github.fuadreza.pikul_dagger.ui.main.univ
 
-import androidx.lifecycle.LiveData
+import android.content.Context
+import android.os.Environment
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import io.github.fuadreza.pikul_dagger.repository.api.FirestoreService
 import io.github.fuadreza.pikul_dagger.repository.model.Universitas
+import java.io.File
 import javax.inject.Inject
 
 
@@ -21,7 +26,11 @@ class UnivViewModel @Inject constructor(private val repo: FirestoreService) : Vi
 
     val univState = MutableLiveData<UnivViewState>()
 
-    fun getAllUniversitas(){
+    val storage = Firebase.storage
+
+    val storageRef = storage.reference
+
+    fun getAllUniversitas(context: Context?){
 
         //Without limit
         /*repo.getAllUniversitas().addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
@@ -65,11 +74,38 @@ class UnivViewModel @Inject constructor(private val repo: FirestoreService) : Vi
                 val universitasItem = doc.toObject(Universitas::class.java)
                 allUniversitasList.add(universitasItem)
             }
+            //download logo
+            downloadLogo(allUniversitasList, context)
+
             allUniversitas.value = allUniversitasList
             univState.value = UnivViewState.OnLoadUnivState(allUniversitasList)
         })
 
         //return allUniversitas
+    }
+
+    fun downloadLogo(listUniv: MutableList<Universitas>, context: Context?){
+        listUniv.forEach {
+            val logoRef = storageRef.child("logo_univ/" + it.logo_url)
+
+            //val localFile = File.createTempFile(it.logo_url.toString(), "png")
+
+            val dataPath = File(context?.filesDir, "logo_image")
+            if(!dataPath.exists()){
+                dataPath.mkdir()
+            }
+            Log.d("Direktori data", "PATH : " + dataPath)
+
+            val localFile = File(dataPath, it.logo_url.toString())
+
+            Log.d("Direktori lokal", "PATH : " + localFile)
+
+            /*logoRef.getFile(localFile).addOnSuccessListener {
+                Log.d("firebase ",";local tem file created  created " +localFile.toString())
+            }*/
+
+            it.logo_uri = localFile.path
+        }
     }
 
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,7 +44,7 @@ class UnivFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_univ, container, false)
 
-        if(savedInstanceState == null) univViewModel.getAllUniversitas()
+        if (savedInstanceState == null) univViewModel.getAllUniversitas(context)
 
         observerUnivState()
 
@@ -71,11 +72,16 @@ class UnivFragment : Fragment() {
         })
     }
 
-    private fun onLoadUniv(univList: List<Universitas>){
+
+
+    private fun onLoadUniv(univList: List<Universitas>) {
         univAdapter.clear()
         univList.forEach {
             univAdapter.add(UnivAdapter(it))
         }
         univAdapter.notifyDataSetChanged()
     }
+
 }
+
+

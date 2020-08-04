@@ -11,5 +11,6 @@ import kotlinx.android.parcel.Parcelize
 data class Universitas (
     var nama_univ: String? = "",
     var akreditasi: String? = "",
-    var logo_url: String? = ""
+    var logo_url: String? = "",
+    var logo_uri: String? = ""
 ): Parcelable
