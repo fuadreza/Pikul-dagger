@@ -29,6 +29,7 @@
         <activity android:name=".ui.setting.SettingActivity"/>
         <activity android:name=".ui.tes.TesActivity"/>
         <activity android:name=".ui.tes.detailtes.DetailTesActivity"/>
+        <activity android:name=".ui.tes.TesWarningActivity"/>
 
     </application>
 

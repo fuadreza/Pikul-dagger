@@ -12,6 +12,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.ui.tes.TesActivity
+import io.github.fuadreza.pikul_dagger.ui.tes.TesWarningActivity
 import kotlinx.android.synthetic.main.fragment_test.*
 import java.io.File
 import java.io.FileOutputStream
@@ -73,7 +74,7 @@ class TesFragment : Fragment() {
 
     private fun setupViews(){
         btn_tes.setOnClickListener {
-            startActivity(Intent(activity, TesActivity::class.java))
+            startActivity(Intent(activity, TesWarningActivity::class.java))
         }
     }
 }

@@ -13,4 +13,8 @@
     <string name="google">Google</string>
     <string name="label_min">Sangat Tidak Suka</string>
     <string name="label_max">Sangat Suka</string>
+    <string name="perhatian">Perhatian!</string>
+    <string name="warning_msg">Persiapkan waktu luang untuk mengerjakan tes dengan teliti dan sesuai dengan keadaan yang sebenarnya.</string>
+    <string name="estimasi">(Estimasi pengerjaan tes 15 menit)</string>
+    <string name="mengerti">YA SAYA MENGERTI</string>
 </resources>
