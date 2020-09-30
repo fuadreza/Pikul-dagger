@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme">
-        <activity android:name=".ui.main.HomeActivity">
+        <activity android:name=".views.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,12 +24,12 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".ui.login.LoginActivity"/>
-        <activity android:name=".ui.register.RegisterActivity"/>
-        <activity android:name=".ui.setting.SettingActivity"/>
-        <activity android:name=".ui.tes.TesActivity"/>
-        <activity android:name=".ui.tes.detailtes.DetailTesActivity"/>
-        <activity android:name=".ui.tes.TesWarningActivity"/>
+        <activity android:name=".views.main.HomeActivity"/>
+        <activity android:name=".views.register.RegisterActivity"/>
+        <activity android:name=".views.setting.SettingActivity"/>
+        <activity android:name=".views.tes.TesActivity"/>
+        <activity android:name=".views.tes.detailtes.DetailTesActivity"/>
+        <activity android:name=".views.tes.TesWarningActivity"/>
 
     </application>
 
