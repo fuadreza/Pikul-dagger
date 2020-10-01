@@ -23,7 +23,6 @@ class UnivAdapter(private val univ: Universitas) : Item() {
 
     val storageRef = storage.reference
 
-
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.apply {
             tv_nama_univ.text = univ.nama_univ
@@ -35,13 +34,17 @@ class UnivAdapter(private val univ: Universitas) : Item() {
 
             val localFile = File(univ.logo_uri.toString())
 
-            logoRef.getFile(localFile).addOnSuccessListener {
-                Glide.with(this)
-                    .load(localFile)
-                    .into(iv_logo)
-            }.addOnFailureListener{
+            Glide.with(this)
+                .load(localFile)
+                .into(iv_logo)
 
-            }
+//            logoRef.getFile(localFile).addOnSuccessListener {
+//                Glide.with(this)
+//                    .load(localFile)
+//                    .into(iv_logo)
+//            }.addOnFailureListener{
+//
+//            }
 
             /*Glide.with(this)
                 .load(logoRef)

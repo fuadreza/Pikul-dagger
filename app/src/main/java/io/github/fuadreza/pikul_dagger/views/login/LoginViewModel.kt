@@ -26,9 +26,9 @@ class LoginViewModel @ViewModelInject constructor(private val userRepository: Us
     fun checkLogin() {
         viewModelScope.launch {
             _isLoggedIn = userRepository.isUserLoggedIn()
-            if (_isLoggedIn) {
-                _loginState.value = LoginState.IsLoggedIn
-            }
+        }
+        if (_isLoggedIn) {
+            _loginState.value = LoginState.IsLoggedIn
         }
     }
 
@@ -46,11 +46,11 @@ class LoginViewModel @ViewModelInject constructor(private val userRepository: Us
         if (validate(email, password)) {
             CoroutineScope(IO).launch {
                 userRepository.login(email, password)
-                if(userRepository.status.equals("success")){
-                    _loginState.value = LoginState.IsLoggedIn
-                }else{
-                    _loginState.value = LoginState.LoginError
-                }
+            }
+            if(userRepository.status == "success"){
+                _loginState.value = LoginState.IsLoggedIn
+            }else{
+                _loginState.value = LoginState.LoginError
             }
 
             /*FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)

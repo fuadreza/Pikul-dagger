@@ -6,27 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.model.Universitas
-import io.github.fuadreza.pikul_dagger.views.main.HomeActivity
 import kotlinx.android.synthetic.main.fragment_univ.*
-import javax.inject.Inject
 
 /**
  * Dibuat dengan kerjakerasbagaiquda oleh Shifu pada tanggal 28/06/2020.
  *
  */
 
-class UnivFragment : Fragment() {
+@AndroidEntryPoint
+class UnivFragment : Fragment(), LifecycleOwner {
 
-    @Inject
-    lateinit var univViewModel: UnivViewModel
-
-    lateinit var listUniv: List<Universitas>
+    private val univViewModel: UnivViewModel by viewModels()
 
     private val univAdapter = GroupAdapter<ViewHolder>()
 
@@ -43,9 +42,10 @@ class UnivFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_univ, container, false)
 
-        if (savedInstanceState == null) univViewModel.getAllUniversitas(context)
+//        if (savedInstanceState == null) univViewModel.getAllUniversitas(context)
+        lifecycle.addObserver(univViewModel)
 
-        observerUnivState()
+        observe()
 
         return view
     }
@@ -63,14 +63,16 @@ class UnivFragment : Fragment() {
         }
     }
 
-    private fun observerUnivState() {
+    private fun observe() {
+        univViewModel.allUniversitas.observe(viewLifecycleOwner, Observer { it ->
+            onLoadUniv(it)
+        })
 //        univViewModel.univState.observe(this, Observer { state ->
 //            when (state) {
 //                is UnivViewState.OnLoadUnivState -> onLoadUniv(state.univList)
 //            }
 //        })
     }
-
 
 
     private fun onLoadUniv(univList: List<Universitas>) {

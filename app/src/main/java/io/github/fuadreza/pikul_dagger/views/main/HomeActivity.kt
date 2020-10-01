@@ -1,20 +1,20 @@
 package io.github.fuadreza.pikul_dagger.views.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.fuadreza.pikul_dagger.R
-import io.github.fuadreza.pikul_dagger.views.login.LoginActivity
 import io.github.fuadreza.pikul_dagger.views.main.profile.ProfileFragment
 import io.github.fuadreza.pikul_dagger.views.main.tes.TesFragment
+import io.github.fuadreza.pikul_dagger.views.main.tes.TesFragmentDirections
 import io.github.fuadreza.pikul_dagger.views.main.univ.UnivFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,13 +23,16 @@ class HomeActivity : AppCompatActivity(), LifecycleOwner {
 
     private val homeViewModel: HomeViewModel by viewModels()
 
+    private lateinit var hostFragment: NavHostFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
         setContentView(R.layout.activity_main)
+        supportActionBar?.hide()
+
         lifecycle.addObserver(homeViewModel)
 
-        observe()
+        setupViews()
 
         /*if (!userManager.isUserLoggedIn()) {
             Log.d("STATUS LOGIN", "NO LOGIN")
@@ -44,28 +47,43 @@ class HomeActivity : AppCompatActivity(), LifecycleOwner {
         }*/
     }
 
-    private fun observe(){
+    override fun onResume() {
+        super.onResume()
+        observe()
+        NavigationUI.setupWithNavController(
+            navigation_menu,
+            hostFragment.navController
+        );
+    }
+
+    private fun observe() {
 
     }
 
     private fun setupViews() {
         //welcome.text = userManager.user?.displayName.toString()
-        replaceFragment(TesFragment())
-        navigation_menu.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+//        val host = NavHostFragment.create(R.navigation.nav_graph)
+        hostFragment = NavHostFragment.create(R.navigation.nav_graph)
+        supportFragmentManager.beginTransaction().replace(R.id.frameContainer, hostFragment)
+            .setPrimaryNavigationFragment(hostFragment).commit()
+//        replaceFragment(TesFragment())
+//        navigation_menu.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
     }
 
     private val mOnNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.tes -> {
+                R.id.tesFragment -> {
+                    TesFragmentDirections.actionTesFragmentToUnivFragment()
                     replaceFragment(TesFragment())
                     return@OnNavigationItemSelectedListener true
                 }
-                R.id.universitas -> {
+                R.id.univFragment -> {
                     replaceFragment(UnivFragment())
                     return@OnNavigationItemSelectedListener true
                 }
-                R.id.profile -> {
+                R.id.profileFragment -> {
                     replaceFragment(ProfileFragment())
                     return@OnNavigationItemSelectedListener true
                 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.QuerySnapshot
-import io.github.fuadreza.pikul_dagger.data.remote.FirestoreService
+import io.github.fuadreza.pikul_dagger.data.remote.UnivFirestore
 import io.github.fuadreza.pikul_dagger.model.SoalTes
 import javax.inject.Inject
 
@@ -13,7 +13,7 @@ import javax.inject.Inject
  *
  */
 
-class TesViewModel @Inject constructor(private val repo: FirestoreService) : ViewModel() {
+class TesViewModel @Inject constructor(private val repo: UnivFirestore) : ViewModel() {
 
     var allSoalTes: MutableLiveData<List<SoalTes>> = MutableLiveData()
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/tesFragment">
+    <fragment
+        android:id="@+id/tesFragment"
+        android:name="io.github.fuadreza.pikul_dagger.views.main.tes.TesFragment"
+        tools:layout="@layout/fragment_test"
+        android:label="TesFragment" >
+        <action
+            android:id="@+id/action_tesFragment_to_univFragment"
+            app:destination="@id/univFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_left"/>
+    </fragment>
+    <fragment
+        android:id="@+id/univFragment"
+        tools:layout="@layout/fragment_univ"
+        android:name="io.github.fuadreza.pikul_dagger.views.main.univ.UnivFragment"
+        android:label="UnivFragment" >
+        <action
+            android:id="@+id/action_univFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        tools:layout="@layout/fragment_profile"
+        android:name="io.github.fuadreza.pikul_dagger.views.main.profile.ProfileFragment"
+        android:label="ProfileFragment" />
+</navigation>

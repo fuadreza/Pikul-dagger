@@ -3,8 +3,11 @@ package io.github.fuadreza.pikul_dagger.views.register
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.fuadreza.pikul_dagger.PikulApp
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.views.login.LoginActivity
@@ -15,25 +18,27 @@ import javax.inject.Inject
  * Dibuat dengan kerjakerasbagaiquda oleh Shifu pada tanggal 29/06/2020.
  *
  */
+@AndroidEntryPoint
+class RegisterActivity : AppCompatActivity(), LifecycleOwner {
 
-class RegisterActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var registerViewModel: RegisterViewModel
+    private val registerViewModel: RegisterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-//        (application as PikulApp).appComponent.registerComponent().create().inject(this)
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         supportActionBar?.hide()
 
+        lifecycle.addObserver(registerViewModel)
+
+        observe()
+
+        setupViews()
+    }
+
+    private fun observe(){
         registerViewModel.registerState.observe(this, Observer<RegisterState> { state ->
             handleUIState(state)
         })
-
-        setupViews()
     }
 
     private fun setupViews() {

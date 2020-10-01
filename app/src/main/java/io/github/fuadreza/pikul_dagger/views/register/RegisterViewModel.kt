@@ -1,19 +1,23 @@
 package io.github.fuadreza.pikul_dagger.views.register
 
 import android.util.Log
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserProfileChangeRequest
+import androidx.lifecycle.ViewModel
 import io.github.fuadreza.pikul_dagger.repository.UserRepository
-import javax.inject.Inject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * Dibuat dengan kerjakerasbagaiquda oleh Shifu pada tanggal 29/06/2020.
  *
  */
 
-class RegisterViewModel constructor(private val userRepository: UserRepository) {
+class RegisterViewModel @ViewModelInject constructor(private val userRepository: UserRepository) :
+    ViewModel(), LifecycleObserver {
 
     private val _registerState = MutableLiveData<RegisterState>()
     val registerState: LiveData<RegisterState>
@@ -23,31 +27,21 @@ class RegisterViewModel constructor(private val userRepository: UserRepository) 
         _registerState.value = RegisterState.IsLoading(true)
 
         if (validate(name, email, password, confirmPassword)) {
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener {
-                    val user = FirebaseAuth.getInstance().currentUser
-                    val profileUpdate = UserProfileChangeRequest.Builder()
-                        .setDisplayName(name)
-                        .build()
-
-                    user?.updateProfile(profileUpdate)
-
+            CoroutineScope(Dispatchers.IO).launch {
+                userRepository.register(name, email, password)
+                if (userRepository.registerStatus == "success") {
                     _registerState.value = RegisterState.RegisterSuccess
                     _registerState.value = RegisterState.ShowToast("Akun berhasil dibuat")
-
-                }.addOnFailureListener {
-                    Log.d("REGISTER", "Gagal membuat akun: ${it.message}")
+                } else {
                     _registerState.value = RegisterState.ShowToast("Gagal membuat akun")
                     _registerState.value = RegisterState.RegisterError
                 }
+            }
         }
-
         _registerState.value = RegisterState.IsLoading(false)
-
     }
 
     fun validate(name: String, email: String, password: String, confirmPassword: String): Boolean {
-
         if (name.isBlank()) {
             _registerState.value = RegisterState.ShowToast("Nama tidak boleh kosong")
         } else {
@@ -69,12 +63,4 @@ class RegisterViewModel constructor(private val userRepository: UserRepository) 
         return false
     }
 
-}
-
-sealed class RegisterState {
-    object RegisterSuccess : RegisterState()
-    object RegisterError : RegisterState()
-
-    data class ShowToast(var msg: String) : RegisterState()
-    data class IsLoading(var state: Boolean = false) : RegisterState()
 }

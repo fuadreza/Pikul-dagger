@@ -30,9 +30,12 @@ class LoginActivity : AppCompatActivity(), LifecycleOwner {
 
         lifecycle.addObserver(loginViewModel)
 
-        observe()
-
         setupViews()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        observe()
     }
 
     private fun observe(){

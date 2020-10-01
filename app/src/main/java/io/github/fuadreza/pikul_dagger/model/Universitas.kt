@@ -5,8 +5,11 @@ package io.github.fuadreza.pikul_dagger.model
  *
  */
 data class Universitas (
+    var id: String? = "",
     var nama_univ: String? = "",
     var akreditasi: String? = "",
+    var deskripsi: String? = "",
     var logo_url: String? = "",
-    var logo_uri: String? = ""
+    var logo_uri: String? = "",
+    var website: String? = ""
 )

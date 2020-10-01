@@ -2,16 +2,21 @@ package io.github.fuadreza.pikul_dagger.views.main.univ
 
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import io.github.fuadreza.pikul_dagger.data.remote.FirestoreService
+import dagger.hilt.android.qualifiers.ApplicationContext
+import io.github.fuadreza.pikul_dagger.data.remote.UnivFirestore
 import io.github.fuadreza.pikul_dagger.model.Universitas
+import io.github.fuadreza.pikul_dagger.repository.UnivRepository
+import io.github.fuadreza.pikul_dagger.repository.UserRepository
 import java.io.File
-import javax.inject.Inject
 
 
 /**
@@ -19,7 +24,7 @@ import javax.inject.Inject
  *
  */
 
-class UnivViewModel @Inject constructor(private val repo: FirestoreService) : ViewModel() {
+class UnivViewModel @ViewModelInject constructor(private val firestore: UnivFirestore, @ApplicationContext val context: Context) : ViewModel(), LifecycleObserver {
 
     var allUniversitas: MutableLiveData<List<Universitas>> = MutableLiveData()
 
@@ -28,6 +33,30 @@ class UnivViewModel @Inject constructor(private val repo: FirestoreService) : Vi
     val storage = Firebase.storage
 
     val storageRef = storage.reference
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun fetchUnivs(){
+        firestore.getAllUniv()
+            .addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
+                if (e != null){
+                    Log.w("UNIV_VIEW_MODEL", "Listen Failed", e)
+                    return@EventListener
+                }
+
+                val savedUnivList : MutableList<Universitas> = mutableListOf()
+
+                for(doc in value!!){
+                    val univItem = doc.toObject(Universitas::class.java)
+                    savedUnivList.add(univItem)
+                }
+                downloadLogo(savedUnivList, context)
+                allUniversitas.value = savedUnivList
+
+            })
+
+        //download logo
+
+    }
 
     fun getAllUniversitas(context: Context?){
 
@@ -62,7 +91,9 @@ class UnivViewModel @Inject constructor(private val repo: FirestoreService) : Vi
             allUniversitas.value = allUniversitasList
             univState.value = UnivViewState.OnLoadUnivState(allUniversitasList)
         }*/
-        repo.getAllUniversitas().addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
+
+
+        /*repo.getAllUniversitas().addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
             if (e != null) {
                 allUniversitas.value = null
                 return@EventListener
@@ -78,7 +109,8 @@ class UnivViewModel @Inject constructor(private val repo: FirestoreService) : Vi
 
             allUniversitas.value = allUniversitasList
             univState.value = UnivViewState.OnLoadUnivState(allUniversitasList)
-        })
+        })*/
+
 
         //return allUniversitas
     }

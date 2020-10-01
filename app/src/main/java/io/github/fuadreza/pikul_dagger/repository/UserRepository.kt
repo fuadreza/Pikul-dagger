@@ -2,6 +2,7 @@ package io.github.fuadreza.pikul_dagger.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,6 +18,8 @@ class UserRepository{
     var user: FirebaseUser? = firebaseAuth.currentUser
 
     var status: String = ""
+
+    var registerStatus: String = ""
 
     fun isUserLoggedIn(): Boolean {
         return user != null
@@ -34,6 +37,22 @@ class UserRepository{
             }
             .addOnFailureListener {
                 status = "Failed Login, ${it.message}"
+            }
+    }
+
+    suspend fun register(name: String, email: String, password: String){
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                val user = FirebaseAuth.getInstance().currentUser
+                val profileUpdate = UserProfileChangeRequest.Builder()
+                    .setDisplayName(name)
+                    .build()
+
+                user?.updateProfile(profileUpdate)
+                registerStatus = "success"
+            }
+            .addOnFailureListener {
+                registerStatus = "failed"
             }
     }
 
