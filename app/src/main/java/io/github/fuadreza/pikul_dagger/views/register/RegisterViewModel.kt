@@ -1,6 +1,5 @@
 package io.github.fuadreza.pikul_dagger.views.register
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData

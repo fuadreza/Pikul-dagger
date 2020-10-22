@@ -3,7 +3,6 @@ package io.github.fuadreza.pikul_dagger.views.tes.detailtes
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import io.github.fuadreza.pikul_dagger.PikulApp
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.model.SoalTes
 import io.github.fuadreza.pikul_dagger.views.tes.TesViewModel
@@ -14,7 +13,7 @@ import javax.inject.Inject
  * Dibuat dengan kerjakerasbagaiquda oleh Shifu pada tanggal 08/07/2020.
  *
  */
-class DetailTesActivity: AppCompatActivity() {
+class DetailTesActivity : AppCompatActivity() {
 
     @Inject
     lateinit var tesViewModel: TesViewModel
@@ -33,7 +32,7 @@ class DetailTesActivity: AppCompatActivity() {
 
     private fun observeTesViewModel() {
         tesViewModel.soalState.observe(this, Observer { state ->
-            when(state){
+            when (state) {
                 is TesViewState.OnLoadUnivState -> onLoadTes(state.soalList)
             }
         })

@@ -11,18 +11,18 @@ import kotlinx.android.synthetic.main.activity_warning.*
  *
  */
 
-class TesWarningActivity: AppCompatActivity() {
+class TesWarningActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_warning)
         supportActionBar?.hide()
 
-        btn_mengerti.setOnClickListener{
+        btn_mengerti.setOnClickListener {
             val intent = Intent(this, TesActivity::class.java)
             startActivity(intent)
         }
 
-        
+
     }
 }

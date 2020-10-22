@@ -6,8 +6,8 @@ package io.github.fuadreza.pikul_dagger.model
  *
  */
 
-data class SoalTes (
-    var id_soal : String? = "",
+data class SoalTes(
+    var id_soal: String? = "",
     var kategori: String? = "",
     var rasio: String? = "",
     var soal: String? = ""

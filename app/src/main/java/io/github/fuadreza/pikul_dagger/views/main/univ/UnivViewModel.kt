@@ -4,9 +4,6 @@ import android.content.Context
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
@@ -14,8 +11,6 @@ import com.google.firebase.storage.ktx.storage
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.github.fuadreza.pikul_dagger.data.remote.UnivFirestore
 import io.github.fuadreza.pikul_dagger.model.Universitas
-import io.github.fuadreza.pikul_dagger.repository.UnivRepository
-import io.github.fuadreza.pikul_dagger.repository.UserRepository
 import java.io.File
 
 
@@ -24,7 +19,10 @@ import java.io.File
  *
  */
 
-class UnivViewModel @ViewModelInject constructor(private val firestore: UnivFirestore, @ApplicationContext val context: Context) : ViewModel(), LifecycleObserver {
+class UnivViewModel @ViewModelInject constructor(
+    private val firestore: UnivFirestore,
+    @ApplicationContext val context: Context
+) : ViewModel(), LifecycleObserver {
 
     var allUniversitas: MutableLiveData<List<Universitas>> = MutableLiveData()
 
@@ -35,17 +33,17 @@ class UnivViewModel @ViewModelInject constructor(private val firestore: UnivFire
     val storageRef = storage.reference
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun fetchUnivs(){
+    fun fetchUnivs() {
         firestore.getAllUniv()
             .addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
-                if (e != null){
+                if (e != null) {
                     Log.w("UNIV_VIEW_MODEL", "Listen Failed", e)
                     return@EventListener
                 }
 
-                val savedUnivList : MutableList<Universitas> = mutableListOf()
+                val savedUnivList: MutableList<Universitas> = mutableListOf()
 
-                for(doc in value!!){
+                for (doc in value!!) {
                     val univItem = doc.toObject(Universitas::class.java)
                     savedUnivList.add(univItem)
                 }
@@ -58,7 +56,7 @@ class UnivViewModel @ViewModelInject constructor(private val firestore: UnivFire
 
     }
 
-    fun getAllUniversitas(context: Context?){
+    fun getAllUniversitas(context: Context?) {
 
         //Without limit
         /*repo.getAllUniversitas().addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
@@ -115,14 +113,14 @@ class UnivViewModel @ViewModelInject constructor(private val firestore: UnivFire
         //return allUniversitas
     }
 
-    fun downloadLogo(listUniv: MutableList<Universitas>, context: Context?){
+    fun downloadLogo(listUniv: MutableList<Universitas>, context: Context?) {
         listUniv.forEach {
             val logoRef = storageRef.child("logo_univ/" + it.logo_url)
 
             //val localFile = File.createTempFile(it.logo_url.toString(), "png")
 
             val dataPath = File(context?.filesDir, "logo_image")
-            if(!dataPath.exists()){
+            if (!dataPath.exists()) {
                 dataPath.mkdir()
             }
             Log.d("Direktori data", "PATH : " + dataPath)

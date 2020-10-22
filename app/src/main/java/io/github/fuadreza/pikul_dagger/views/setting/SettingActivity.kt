@@ -3,7 +3,6 @@ package io.github.fuadreza.pikul_dagger.views.setting
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import io.github.fuadreza.pikul_dagger.PikulApp
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.views.main.HomeActivity
 import kotlinx.android.synthetic.main.activity_setting.*
@@ -29,7 +28,7 @@ class SettingActivity : AppCompatActivity() {
         setupViews()
     }
 
-    fun setupViews(){
+    fun setupViews() {
         supportActionBar?.title = "Setting"
         btn_logout.setOnClickListener {
             settingViewModel.logout()

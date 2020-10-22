@@ -38,6 +38,7 @@ class UnivAdapter(private val univ: Universitas) : Item() {
                 .load(localFile)
                 .into(iv_logo)
 
+            //TODO UNIV KELAR GANTI KE PROFILE ATAU TES
 //            logoRef.getFile(localFile).addOnSuccessListener {
 //                Glide.with(this)
 //                    .load(localFile)

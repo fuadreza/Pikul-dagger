@@ -3,15 +3,13 @@ package io.github.fuadreza.pikul_dagger.repository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Dibuat dengan kerjakerasbagaiquda oleh Shifu pada tanggal 24/06/2020.
  *
  */
 
-class UserRepository{
+class UserRepository {
 
     private val firebaseAuth = FirebaseAuth.getInstance()
 
@@ -29,7 +27,7 @@ class UserRepository{
 //        userComponent = userComponentFactory.create()
     }
 
-    suspend fun login(email: String, password: String){
+    suspend fun login(email: String, password: String) {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 user = it.user
@@ -40,7 +38,7 @@ class UserRepository{
             }
     }
 
-    suspend fun register(name: String, email: String, password: String){
+    suspend fun register(name: String, email: String, password: String) {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 val user = FirebaseAuth.getInstance().currentUser
@@ -56,7 +54,7 @@ class UserRepository{
             }
     }
 
-    fun logoutUser(){
+    fun logoutUser() {
         firebaseAuth.signOut()
         user = null
     }

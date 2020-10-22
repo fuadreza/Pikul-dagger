@@ -47,9 +47,9 @@ class LoginViewModel @ViewModelInject constructor(private val userRepository: Us
             CoroutineScope(IO).launch {
                 userRepository.login(email, password)
             }
-            if(userRepository.status == "success"){
+            if (userRepository.status == "success") {
                 _loginState.value = LoginState.IsLoggedIn
-            }else{
+            } else {
                 _loginState.value = LoginState.LoginError
             }
 

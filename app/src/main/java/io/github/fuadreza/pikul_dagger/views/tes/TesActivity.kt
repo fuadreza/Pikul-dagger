@@ -3,7 +3,6 @@ package io.github.fuadreza.pikul_dagger.views.tes
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import io.github.fuadreza.pikul_dagger.PikulApp
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.views.tes.detailtes.DetailTesActivity
 import kotlinx.android.synthetic.main.activity_tes.*
@@ -26,12 +25,12 @@ class TesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tes)
 
-        if(savedInstanceState == null) tesViewModel.getAllSoals()
+        if (savedInstanceState == null) tesViewModel.getAllSoals()
 
         setupViews()
     }
 
-    private fun setupViews(){
+    private fun setupViews() {
         btn_1.setOnClickListener {
             val intent = Intent(this, DetailTesActivity::class.java)
             startActivity(intent)

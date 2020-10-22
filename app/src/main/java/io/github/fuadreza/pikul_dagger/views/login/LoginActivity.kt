@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity(), LifecycleOwner {
         observe()
     }
 
-    private fun observe(){
+    private fun observe() {
         loginViewModel.loginState.observe(this, Observer<LoginState> { state ->
             handleUIState(state)
         })

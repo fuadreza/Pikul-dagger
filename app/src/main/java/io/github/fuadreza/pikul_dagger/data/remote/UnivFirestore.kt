@@ -10,7 +10,7 @@ import com.google.firebase.firestore.Query
  *
  */
 
-class UnivFirestore constructor(){
+class UnivFirestore constructor() {
 
     private val firestore = FirebaseFirestore.getInstance()
 

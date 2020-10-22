@@ -66,7 +66,7 @@ class TesFragment : Fragment() {
         }*/
     }
 
-    private fun setupViews(){
+    private fun setupViews() {
         btn_tes.setOnClickListener {
             startActivity(Intent(activity, TesWarningActivity::class.java))
         }

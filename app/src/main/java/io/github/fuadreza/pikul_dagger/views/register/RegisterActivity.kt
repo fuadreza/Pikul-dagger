@@ -8,11 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.fuadreza.pikul_dagger.PikulApp
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.views.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_register.*
-import javax.inject.Inject
 
 /**
  * Dibuat dengan kerjakerasbagaiquda oleh Shifu pada tanggal 29/06/2020.
@@ -35,7 +33,7 @@ class RegisterActivity : AppCompatActivity(), LifecycleOwner {
         setupViews()
     }
 
-    private fun observe(){
+    private fun observe() {
         registerViewModel.registerState.observe(this, Observer<RegisterState> { state ->
             handleUIState(state)
         })
