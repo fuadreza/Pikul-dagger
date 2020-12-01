@@ -34,22 +34,20 @@ class UnivAdapter(private val univ: Universitas) : Item() {
 
             val localFile = File(univ.logo_uri.toString())
 
-            Glide.with(this)
-                .load(localFile)
-                .into(iv_logo)
+            if (localFile.exists()) {
+                Glide.with(this)
+                    .load(localFile)
+                    .into(iv_logo)
+            } else {
+                logoRef.getFile(localFile).addOnSuccessListener {
+                    Glide.with(this)
+                        .load(localFile)
+                        .into(iv_logo)
+                }.addOnFailureListener {
 
-            //TODO UNIV KELAR GANTI KE PROFILE ATAU TES
-//            logoRef.getFile(localFile).addOnSuccessListener {
-//                Glide.with(this)
-//                    .load(localFile)
-//                    .into(iv_logo)
-//            }.addOnFailureListener{
-//
-//            }
-
-            /*Glide.with(this)
-                .load(logoRef)
-                .into(iv_logo)*/
+                }
+            }
+            //TODO kalau scroll cepat gambar masih berubah2
         }
     }
 
