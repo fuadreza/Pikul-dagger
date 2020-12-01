@@ -1,24 +1,24 @@
 package io.github.fuadreza.pikul_dagger.views.tes
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.QuerySnapshot
 import io.github.fuadreza.pikul_dagger.data.remote.UnivFirestore
 import io.github.fuadreza.pikul_dagger.model.SoalTes
-import javax.inject.Inject
 
 /**
  * Dibuat dengan kerjakerasbagaiquda oleh Shifu pada tanggal 09/07/2020.
  *
  */
 
-class TesViewModel @Inject constructor(private val repo: UnivFirestore) : ViewModel() {
+class TesViewModel @ViewModelInject constructor(private val repo: UnivFirestore) : ViewModel(), LifecycleObserver {
 
     var allSoalTes: MutableLiveData<List<SoalTes>> = MutableLiveData()
 
     var soalState = MutableLiveData<TesViewState>()
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun getAllSoals() {
         repo.getAllSoal().addSnapshotListener(EventListener<QuerySnapshot> { value, e ->
             if (e != null) {

@@ -28,7 +28,7 @@
         <activity android:name=".views.register.RegisterActivity"/>
         <activity android:name=".views.setting.SettingActivity"/>
         <activity android:name=".views.tes.TesActivity"/>
-        <activity android:name=".views.tes.detailtes.DetailTesActivity"/>
+        <activity android:name=".views.tes.detail_tes.DetailTesActivity"/>
         <activity android:name=".views.tes.TesWarningActivity"/>
 
     </application>

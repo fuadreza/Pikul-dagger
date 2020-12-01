@@ -48,6 +48,7 @@ class UnivAdapter(private val univ: Universitas) : Item() {
                 }
             }
             //TODO kalau scroll cepat gambar masih berubah2
+            // https://stackoverflow.com/questions/50092376/loading-images-from-firebase-storage-in-recycler-shows-images-changing
         }
     }
 

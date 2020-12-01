@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import io.github.fuadreza.pikul_dagger.data.remote.UnivFirestore
+import io.github.fuadreza.pikul_dagger.repository.SoalRepository
 import io.github.fuadreza.pikul_dagger.repository.UserRepository
 
 /**
@@ -21,5 +22,8 @@ object AppModule {
 
     @Provides
     fun provideUnivFirestore() = UnivFirestore()
+
+    @Provides
+    fun provideSoalRepository() = SoalRepository()
 
 }
