@@ -18,8 +18,9 @@ import kotlinx.android.synthetic.main.activity_tes.*
 // [v] Fix screen
 // [v] Adapter 6 menu
 // [v] Onclick menu
-// [ ] Enable and disable button based on Progress
-// [ ] Load progress from database
+// [v] Enable and disable button based on Progress
+// [v] Load progress from database
+// [ ] Save Progress after clear tes
 
 @AndroidEntryPoint
 class TesActivity : AppCompatActivity() {
@@ -49,11 +50,13 @@ class TesActivity : AppCompatActivity() {
     }
 
     private fun observe() {
+        tesViewModel.userProgress.observe(this, Observer { userProgress ->
+            userProgress?.let {
+                adapter.setUserProgress(it.progress!!.toInt())
+            }
+        })
         tesViewModel.tes.observe(this, Observer { tes ->
             adapter.setTes(tes)
-        })
-        tesViewModel.userProgress.observe(this, Observer { userProgress ->
-            //TODO SET PROGRESS TO BUTTON TES
         })
     }
 

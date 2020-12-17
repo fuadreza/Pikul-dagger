@@ -32,10 +32,11 @@ object AppModule {
     fun provideSoalRepository() = SoalRepository()
 
     @Provides
-    fun providesUserProgressDao(@ApplicationContext appContext: Context): UserProgressDao{
+    fun providesUserProgressDao(@ApplicationContext appContext: Context): UserProgressDao {
         return LocalDatabase.getDatabase(appContext).userProgressDao()
     }
 
     @Provides
-    fun providesUserProgressRepo(userProgressDao: UserProgressDao) = UserProgressRepository(userProgressDao)
+    fun providesUserProgressRepo(userProgressDao: UserProgressDao) =
+        UserProgressRepository(userProgressDao)
 }
