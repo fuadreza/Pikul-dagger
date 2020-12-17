@@ -17,10 +17,15 @@ import io.github.fuadreza.pikul_dagger.views.tes.model.Tes
  */
 //TODO Detail tes
 // [v] Halaman detail tes
-// [ ] Get data from Firebase
+// [o] Get data from Firebase
+// [ ] display soal
 // [ ] Save answer on session
+// [ ] save score per soal (save with soal id)
 // [ ] Next question
 // [ ] Save last score to local database
+// [ ] Save user progress to local database
+// [ ] back to tes activity when finished
+// [ ] go to hasil tes if all finished
 
 @AndroidEntryPoint
 class DetailTesActivity : AppCompatActivity() {
@@ -41,7 +46,7 @@ class DetailTesActivity : AppCompatActivity() {
 
         lifecycle.addObserver(detailTesViewModel)
 
-        detailTesViewModel.getSoalsByCategory("R")
+        detailTesViewModel.getSoalsByCategory(tes.type.toString())
 
         observeTesViewModel()
 
@@ -56,8 +61,6 @@ class DetailTesActivity : AppCompatActivity() {
     }
 
     private fun onLoadTes(soalList: List<SoalTes>) {
-        //TODO ABLE TO GET DATA
-        // IMPLEMENT tes function (display soal and save score)
 //        Log.d("HELLO WORLD", "DATA RECEIVED : $soalList")
     }
 
