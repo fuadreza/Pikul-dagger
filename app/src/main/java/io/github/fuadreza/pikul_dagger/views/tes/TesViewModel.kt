@@ -2,28 +2,40 @@ package io.github.fuadreza.pikul_dagger.views.tes
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import io.github.fuadreza.pikul_dagger.data.local.dao.UserProgressDao
+import io.github.fuadreza.pikul_dagger.data.local.entity.UserProgress
 import io.github.fuadreza.pikul_dagger.data.remote.UnivFirestore
 import io.github.fuadreza.pikul_dagger.model.SoalTes
+import io.github.fuadreza.pikul_dagger.repository.UserProgressRepository
 import io.github.fuadreza.pikul_dagger.views.tes.model.Tes
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 
 /**
  * Dibuat dengan kerjakerasbagaiquda oleh Shifu pada tanggal 09/07/2020.
  *
  */
 
-class TesViewModel @ViewModelInject constructor(private val repo: UnivFirestore) : ViewModel(),
+class TesViewModel @ViewModelInject constructor(private val repo: UserProgressRepository) : ViewModel(),
     LifecycleObserver {
 
     var allSoalTes: MutableLiveData<List<SoalTes>> = MutableLiveData()
 
-    var soalState = MutableLiveData<TesViewState>()
-
     private val _tes = MutableLiveData<List<Tes>>()
     val tes: LiveData<List<Tes>> = _tes
+
+    var userProgress: LiveData<UserProgress> = MutableLiveData()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun init() {
         fetchTes()
+        fetchUserProgress()
+    }
+
+    private fun fetchUserProgress() {
+        viewModelScope.launch(IO) {
+            userProgress = repo.userProgress
+        }
     }
 
     private fun fetchTes() {

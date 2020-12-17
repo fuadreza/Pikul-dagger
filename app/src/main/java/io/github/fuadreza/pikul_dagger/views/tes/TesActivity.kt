@@ -52,6 +52,9 @@ class TesActivity : AppCompatActivity() {
         tesViewModel.tes.observe(this, Observer { tes ->
             adapter.setTes(tes)
         })
+        tesViewModel.userProgress.observe(this, Observer { userProgress ->
+            //TODO SET PROGRESS TO BUTTON TES
+        })
     }
 
     private fun initAdapter() {
