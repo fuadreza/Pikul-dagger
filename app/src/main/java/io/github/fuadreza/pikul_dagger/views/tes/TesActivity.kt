@@ -1,38 +1,78 @@
 package io.github.fuadreza.pikul_dagger.views.tes
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.fuadreza.pikul_dagger.R
-import io.github.fuadreza.pikul_dagger.views.tes.detail_tes.DetailTesActivity
 import kotlinx.android.synthetic.main.activity_tes.*
 
 /**
  * Dibuat dengan kerjakerasbagaiquda oleh Shifu pada tanggal 30/06/2020.
  *
  */
+
+//TODO Tes activity
+// [v] Fix screen
+// [v] Adapter 6 menu
+// [v] Onclick menu
+// [v] Enable and disable button based on Progress
+// [v] Load progress from database
+// [ ] Save Progress after clear tes
+
 @AndroidEntryPoint
 class TesActivity : AppCompatActivity() {
 
     private val tesViewModel: TesViewModel by viewModels()
 
+    private lateinit var adapter: TesAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tes)
+        supportActionBar?.title = "Tes"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         lifecycle.addObserver(tesViewModel)
 
         setupViews()
+
+        initAdapter()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        observe()
+    }
+
+    private fun observe() {
+        tesViewModel.userProgress.observe(this, Observer { userProgress ->
+            userProgress?.let {
+                adapter.setUserProgress(it.progress!!.toInt())
+            }
+        })
+        tesViewModel.tes.observe(this, Observer { tes ->
+            adapter.setTes(tes)
+        })
+    }
+
+    private fun initAdapter() {
+        adapter = TesAdapter(this)
+        rv_tes.layoutManager = GridLayoutManager(this, 3)
+        rv_tes.adapter = adapter
     }
 
     private fun setupViews() {
-        btn_1.setOnClickListener {
-            val intent = Intent(this, DetailTesActivity::class.java)
-            startActivity(intent)
-        }
+
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
 }

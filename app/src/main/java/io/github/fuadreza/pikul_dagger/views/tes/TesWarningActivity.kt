@@ -21,6 +21,7 @@ class TesWarningActivity : AppCompatActivity() {
         btn_mengerti.setOnClickListener {
             val intent = Intent(this, TesActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
 
