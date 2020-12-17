@@ -1,12 +1,14 @@
 package io.github.fuadreza.pikul_dagger.views.tes
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import io.github.fuadreza.pikul_dagger.R
+import io.github.fuadreza.pikul_dagger.views.tes.detail_tes.DetailTesActivity
 import io.github.fuadreza.pikul_dagger.views.tes.model.Tes
 
 class TesAdapter internal constructor(context: Context) :
@@ -30,6 +32,10 @@ class TesAdapter internal constructor(context: Context) :
         val itemView = inflater.inflate(R.layout.item_tes, parent, false)
         return ViewHolder(itemView).listen { pos, type ->
             //TODO Click listener ke detail tes
+            val intent = Intent(parent.context, DetailTesActivity::class.java)
+            val bundle = tes[pos]
+            intent.putExtra(EXTRA_TES, bundle)
+            parent.context.startActivity(intent)
         }
     }
 
@@ -42,5 +48,9 @@ class TesAdapter internal constructor(context: Context) :
     internal fun setTes(tes: List<Tes>) {
         this.tes = tes
         notifyDataSetChanged()
+    }
+
+    companion object {
+        const val EXTRA_TES = "TES"
     }
 }

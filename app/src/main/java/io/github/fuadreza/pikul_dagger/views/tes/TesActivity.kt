@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_tes.*
 //TODO Tes activity
 // [v] Fix screen
 // [v] Adapter 6 menu
-// [ ] Onclick menu
+// [v] Onclick menu
 // [ ] Enable and disable button based on Progress
 // [ ] Load progress from database
 
