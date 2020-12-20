@@ -1,7 +1,6 @@
 package io.github.fuadreza.pikul_dagger.views.tes.detail_tes
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -10,6 +9,7 @@ import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.model.SoalTes
 import io.github.fuadreza.pikul_dagger.views.tes.TesAdapter
 import io.github.fuadreza.pikul_dagger.views.tes.model.Tes
+import kotlinx.android.synthetic.main.activity_detail_tes.*
 
 /**
  * Dibuat dengan kerjakerasbagaiquda oleh Shifu pada tanggal 08/07/2020.
@@ -18,7 +18,7 @@ import io.github.fuadreza.pikul_dagger.views.tes.model.Tes
 //TODO Detail tes
 // [v] Halaman detail tes
 // [o] Get data from Firebase
-// [ ] display soal
+// [v] display soal
 // [ ] Save answer on session
 // [ ] save score per soal (save with soal id)
 // [ ] Next question
@@ -62,6 +62,7 @@ class DetailTesActivity : AppCompatActivity() {
 
     private fun onLoadTes(soalList: List<SoalTes>) {
 //        Log.d("HELLO WORLD", "DATA RECEIVED : $soalList")
+        tvSoal.text = soalList[0].soal
     }
 
 
