@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_detail_tes.*
 // [v] Halaman detail tes
 // [o] Get data from Firebase
 // [v] display soal
+// [v] get soal by id soal
 // [ ] Save answer on session
 // [ ] save score per soal (save with soal id)
 // [ ] Next question
