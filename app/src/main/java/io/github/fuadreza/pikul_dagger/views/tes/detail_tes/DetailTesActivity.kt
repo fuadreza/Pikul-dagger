@@ -64,7 +64,7 @@ class DetailTesActivity : AppCompatActivity() {
                     tes.questions?.get(index)?.let {
                         detailTesViewModel.getSoalById(it)
                     }
-                }else {
+                } else {
                     Toast.makeText(this, "Last soal", Toast.LENGTH_LONG).show()
                 }
             }
@@ -77,12 +77,22 @@ class DetailTesActivity : AppCompatActivity() {
                 }
             }
         })
+
+        detailTesViewModel.totalSkor.observe(this) {
+            Toast.makeText(this, "Skor $it", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun btnHandler() {
         btnLanjut.setOnClickListener {
+            saveScore()
             detailTesViewModel.nextSoal()
         }
+    }
+
+    private fun saveScore() {
+        val score = sbJawaban.progress
+        detailTesViewModel.addScore(score)
     }
 
     private fun onLoadTes(soalTes: SoalTes?) {

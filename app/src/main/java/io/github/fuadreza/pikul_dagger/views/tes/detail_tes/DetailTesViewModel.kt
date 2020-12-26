@@ -19,9 +19,13 @@ class DetailTesViewModel @ViewModelInject constructor(private val repo: SoalRepo
     private var _soalIndex = MutableLiveData<Int>()
     val soalIndex: LiveData<Int> = _soalIndex
 
+    private var _totalSkor = MutableLiveData<Int>()
+    val totalSkor: LiveData<Int> = _totalSkor
+
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun init() {
         _soalIndex.value = 0
+        _totalSkor.value = 0
     }
 
     fun getSoalById(soalId: String) {
@@ -51,9 +55,14 @@ class DetailTesViewModel @ViewModelInject constructor(private val repo: SoalRepo
             })
     }
 
-    fun nextSoal(){
+    fun nextSoal() {
         val newIndex = _soalIndex.value?.plus(1)
         _soalIndex.value = newIndex
+    }
+
+    fun addScore(score: Int) {
+        val newScore = _totalSkor.value?.plus(1 + score)
+        _totalSkor.value = newScore
     }
 
 }
