@@ -51,6 +51,11 @@ class DetailTesViewModel @ViewModelInject constructor(private val repo: SoalRepo
             })
     }
 
+    fun nextSoal(){
+        val newIndex = _soalIndex.value?.plus(1)
+        _soalIndex.value = newIndex
+    }
+
 }
 
 sealed class DetailTesState {

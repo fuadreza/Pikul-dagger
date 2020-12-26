@@ -1,6 +1,7 @@
 package io.github.fuadreza.pikul_dagger.views.tes.detail_tes
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_detail_tes.*
 // [v] get soal by id soal
 // [ ] Save answer on session
 // [ ] save score per soal (save with soal id)
-// [ ] Next question
+// [v] Next question
 // [ ] Save last score to local database
 // [ ] Save user progress to local database
 // [ ] back to tes activity when finished
@@ -48,22 +49,40 @@ class DetailTesActivity : AppCompatActivity() {
 
         lifecycle.addObserver(detailTesViewModel)
 
-        observeTesViewModel()
+        btnHandler()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        observeTesViewModel()
     }
 
     private fun observeTesViewModel() {
         detailTesViewModel.soalIndex.observe(this) { index ->
-            tes.questions?.get(index)?.let {
-                detailTesViewModel.getSoalById(it)
+            tes.questions?.let { questions ->
+                if (index < questions.size) {
+                    tes.questions?.get(index)?.let {
+                        detailTesViewModel.getSoalById(it)
+                    }
+                }else {
+                    Toast.makeText(this, "Last soal", Toast.LENGTH_LONG).show()
+                }
             }
         }
 
         detailTesViewModel.soalState.observe(this, Observer { state ->
             when (state) {
                 is DetailTesState.OnLoadSoalState -> onLoadTes(state.soalList)
+                else -> {
+                }
             }
         })
+    }
+
+    private fun btnHandler() {
+        btnLanjut.setOnClickListener {
+            detailTesViewModel.nextSoal()
+        }
     }
 
     private fun onLoadTes(soalTes: SoalTes?) {
