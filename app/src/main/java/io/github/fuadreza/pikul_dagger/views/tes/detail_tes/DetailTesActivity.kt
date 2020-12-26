@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.model.SoalTes
@@ -46,13 +47,17 @@ class DetailTesActivity : AppCompatActivity() {
 
         lifecycle.addObserver(detailTesViewModel)
 
-        detailTesViewModel.getSoalsByCategory(tes.type.toString())
-
         observeTesViewModel()
 
     }
 
     private fun observeTesViewModel() {
+        detailTesViewModel.soalIndex.observe(this) { index ->
+            tes.questions?.get(index)?.let {
+                detailTesViewModel.getSoalById(it)
+            }
+        }
+
         detailTesViewModel.soalState.observe(this, Observer { state ->
             when (state) {
                 is DetailTesState.OnLoadSoalState -> onLoadTes(state.soalList)
@@ -60,10 +65,11 @@ class DetailTesActivity : AppCompatActivity() {
         })
     }
 
-    private fun onLoadTes(soalList: List<SoalTes>) {
+    private fun onLoadTes(soalTes: SoalTes?) {
 //        Log.d("HELLO WORLD", "DATA RECEIVED : $soalList")
-        tvSoal.text = soalList[0].soal
+        soalTes?.let {
+            tvSoal.text = soalTes.soal
+        }
     }
-
 
 }

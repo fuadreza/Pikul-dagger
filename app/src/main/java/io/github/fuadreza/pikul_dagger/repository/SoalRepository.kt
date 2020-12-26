@@ -1,8 +1,8 @@
 package io.github.fuadreza.pikul_dagger.repository
 
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 
 class SoalRepository constructor() {
     private val firestore = FirebaseFirestore.getInstance()
@@ -12,9 +12,8 @@ class SoalRepository constructor() {
         return docRef
     }
 
-    fun getSoalByCategory(kategori: String): Query {
-        val docRef = firestore.collection("soals")
-            .whereEqualTo("kategori", kategori)
+    fun getSoalById(soalId: String): DocumentReference {
+        val docRef = firestore.collection("soals").document(soalId)
 
         return docRef
     }
