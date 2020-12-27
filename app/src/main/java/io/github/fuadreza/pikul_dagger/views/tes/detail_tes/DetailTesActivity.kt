@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_detail_tes.*
 // [v] Next question
 // [o] go to hasil tes if all finished <- change schema (display button hasil di tes activity)
 // [v] back to tes activity when finished
-// [ ] reset progress after next soal
+// [v] reset progress after next soal
 // [ ] display loading while save score
 // Pending local database
 // [ ] Save answer on session <- pending
@@ -72,6 +72,7 @@ class DetailTesActivity : AppCompatActivity() {
         }
 
         detailTesViewModel.soalIndex.observe(this) { index ->
+            resetButtonState()
             tes.questions?.let { questions ->
                 if (index < questions.size) {
                     tes.questions?.get(index)?.let {
@@ -111,9 +112,15 @@ class DetailTesActivity : AppCompatActivity() {
 
     private fun btnHandler() {
         btnLanjut.setOnClickListener {
+            btnLanjut.isClickable = false
             saveScore()
             detailTesViewModel.nextSoal()
         }
+    }
+
+    private fun resetButtonState(){
+        sbJawaban.progress = 2
+        btnLanjut.isClickable = true
     }
 
     private fun saveScore() {
