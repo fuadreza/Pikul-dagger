@@ -7,6 +7,5 @@ package io.github.fuadreza.pikul_dagger.model
 
 data class JawabanUser(
     val uid: String = "",
-    val name: String = "",
-    val skor_kat: List<String> = emptyList()
+    val skor_kat: ArrayList<Int> = arrayListOf()
 )

@@ -6,6 +6,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.toObject
+import io.github.fuadreza.pikul_dagger.model.JawabanUser
 import io.github.fuadreza.pikul_dagger.model.SoalTes
 import io.github.fuadreza.pikul_dagger.repository.SoalRepository
 
@@ -21,6 +22,8 @@ class DetailTesViewModel @ViewModelInject constructor(private val repo: SoalRepo
 
     private var _totalSkor = MutableLiveData<Int>()
     val totalSkor: LiveData<Int> = _totalSkor
+
+    val savedScoreState = MutableLiveData<DetailTesState>()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun init() {
@@ -65,10 +68,21 @@ class DetailTesViewModel @ViewModelInject constructor(private val repo: SoalRepo
         _totalSkor.value = newScore
     }
 
+    fun saveUserScore(jawabanUser: JawabanUser) {
+        repo.saveUserScore(jawabanUser)
+            .addOnSuccessListener {
+                savedScoreState.value = DetailTesState.OnSavedScoreState("Data Tersimpan")
+            }
+            .addOnFailureListener {
+                savedScoreState.value = DetailTesState.OnSavedScoreState("Data Gagal Tersimpan")
+            }
+    }
 }
 
 sealed class DetailTesState {
     object LoadingState : DetailTesState()
 
     data class OnLoadSoalState(val soalList: SoalTes?) : DetailTesState()
+
+    data class OnSavedScoreState(val message: String?) : DetailTesState()
 }
