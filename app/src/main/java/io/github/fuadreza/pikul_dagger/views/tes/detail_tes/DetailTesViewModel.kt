@@ -69,6 +69,7 @@ class DetailTesViewModel @ViewModelInject constructor(private val repo: SoalRepo
     }
 
     fun saveUserScore(jawabanUser: JawabanUser) {
+        savedScoreState.value = DetailTesState.LoadingState
         repo.saveUserScore(jawabanUser)
             .addOnSuccessListener {
                 savedScoreState.value = DetailTesState.OnSavedScoreState("Data Tersimpan")

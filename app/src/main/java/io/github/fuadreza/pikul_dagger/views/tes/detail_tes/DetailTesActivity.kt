@@ -1,6 +1,9 @@
 package io.github.fuadreza.pikul_dagger.views.tes.detail_tes
 
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -97,12 +100,19 @@ class DetailTesActivity : AppCompatActivity() {
         detailTesViewModel.savedScoreState.observe(this) { state ->
             when (state) {
                 is DetailTesState.OnSavedScoreState -> {
+                    loading.hide()
                     Snackbar.make(
                         parentLayout,
                         state.message.toString(),
                         Snackbar.LENGTH_LONG
                     ).show()
                     finish()
+                }
+                is DetailTesState.LoadingState -> {
+                    btnLanjut.setBackgroundColor(Color.parseColor("#111111"))
+                    Log.d("LOADING STATE", "LOADINGSTATE")
+                    loading.visibility = View.VISIBLE
+                    loading.show()
                 }
                 else -> {
                 }
@@ -113,6 +123,7 @@ class DetailTesActivity : AppCompatActivity() {
     private fun btnHandler() {
         btnLanjut.setOnClickListener {
             btnLanjut.isClickable = false
+            btnLanjut.setBackgroundColor(Color.parseColor("#aaaaaa"))
             saveScore()
             detailTesViewModel.nextSoal()
         }
@@ -121,6 +132,7 @@ class DetailTesActivity : AppCompatActivity() {
     private fun resetButtonState(){
         sbJawaban.progress = 2
         btnLanjut.isClickable = true
+        btnLanjut.setBackgroundColor(resources.getColor(R.color.accent))
     }
 
     private fun saveScore() {
@@ -129,7 +141,6 @@ class DetailTesActivity : AppCompatActivity() {
     }
 
     private fun saveLastScore() {
-        //TODO handle save score
         if (!list_skor.isNullOrEmpty()) {
             when (tes.type) {
                 "R" -> {
