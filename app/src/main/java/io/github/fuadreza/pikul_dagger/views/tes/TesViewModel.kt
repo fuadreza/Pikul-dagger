@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import io.github.fuadreza.pikul_dagger.data.local.entity.UserProgress
 import io.github.fuadreza.pikul_dagger.model.SoalTes
 import io.github.fuadreza.pikul_dagger.repository.UserProgressRepository
+import io.github.fuadreza.pikul_dagger.repository.UserRepository
 import io.github.fuadreza.pikul_dagger.views.tes.model.Tes
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
  *
  */
 
-class TesViewModel @ViewModelInject constructor(private val repo: UserProgressRepository) :
+class TesViewModel @ViewModelInject constructor(private val repo: UserProgressRepository, private val userRepository: UserRepository) :
     ViewModel(),
     LifecycleObserver {
 
@@ -25,10 +26,20 @@ class TesViewModel @ViewModelInject constructor(private val repo: UserProgressRe
 
     var userProgress: LiveData<UserProgress> = MutableLiveData()
 
+    private val _userId = MutableLiveData<String>()
+    val userId: LiveData<String> = _userId
+
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun init() {
         fetchTes()
+        fetchUser()
         fetchUserProgress()
+    }
+
+    private fun fetchUser(){
+        viewModelScope.launch(IO) {
+            _userId.value = userRepository.user?.uid
+        }
     }
 
     private fun fetchUserProgress() {

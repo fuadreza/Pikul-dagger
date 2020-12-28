@@ -22,6 +22,8 @@ import kotlinx.android.synthetic.main.activity_tes.*
 // [v] Load progress from database
 // [ ] Save Progress after clear tes
 // [v] Refactor Tes include list id of question
+// [ ] Load user progress from firebase
+// [ ] button state based on user progress
 
 @AndroidEntryPoint
 class TesActivity : AppCompatActivity() {
