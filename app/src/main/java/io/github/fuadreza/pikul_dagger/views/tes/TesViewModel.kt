@@ -2,7 +2,11 @@ package io.github.fuadreza.pikul_dagger.views.tes
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import io.github.fuadreza.pikul_dagger.data.local.entity.UserProgress
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.ktx.toObject
+import io.github.fuadreza.pikul_dagger.model.JawabanUser
 import io.github.fuadreza.pikul_dagger.model.SoalTes
 import io.github.fuadreza.pikul_dagger.repository.UserProgressRepository
 import io.github.fuadreza.pikul_dagger.repository.UserRepository
@@ -19,12 +23,15 @@ class TesViewModel @ViewModelInject constructor(private val repo: UserProgressRe
     ViewModel(),
     LifecycleObserver {
 
+    val tesState = MutableLiveData<TesState>()
+
     var allSoalTes: MutableLiveData<List<SoalTes>> = MutableLiveData()
 
     private val _tes = MutableLiveData<List<Tes>>()
     val tes: LiveData<List<Tes>> = _tes
 
-    var userProgress: LiveData<UserProgress> = MutableLiveData()
+    private val _userProgress = MutableLiveData<JawabanUser>()
+    var userProgress: LiveData<JawabanUser> = _userProgress
 
     private val _userId = MutableLiveData<String>()
     val userId: LiveData<String> = _userId
@@ -33,18 +40,25 @@ class TesViewModel @ViewModelInject constructor(private val repo: UserProgressRe
     fun init() {
         fetchTes()
         fetchUser()
-        fetchUserProgress()
     }
 
     private fun fetchUser(){
-        viewModelScope.launch(IO) {
-            _userId.value = userRepository.user?.uid
-        }
+        _userId.value = userRepository.user?.uid
     }
 
-    private fun fetchUserProgress() {
+    fun fetchUserProgress(uid: String) {
         viewModelScope.launch(IO) {
-            userProgress = repo.userProgress
+            repo.getUserProgress(uid)
+                .addSnapshotListener(EventListener<DocumentSnapshot> {value, error ->
+                    if (error != null){
+                        return@EventListener
+                    }
+                    try {
+                        _userProgress.value = value?.toObject<JawabanUser>()
+                    }catch (e: FirebaseFirestoreException) {
+
+                    }
+                })
         }
     }
 
@@ -62,9 +76,10 @@ class TesViewModel @ViewModelInject constructor(private val repo: UserProgressRe
 
 }
 
-sealed class TesViewState {
-    object LoadUnivSuccess : TesViewState()
+sealed class TesState {
+    object LoadUnivSuccess : TesState()
 
-    data class ShowToast(var message: String) : TesViewState()
-    data class OnLoadUnivState(val soalList: List<SoalTes>) : TesViewState()
+    data class ShowToast(var message: String) : TesState()
+    data class OnLoadUnivState(val soalList: List<SoalTes>) : TesState()
+    data class OnLoadUserProgressState(val userProgress: JawabanUser) : TesState()
 }
