@@ -1,6 +1,7 @@
 package io.github.fuadreza.pikul_dagger.views.tes
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -25,8 +26,8 @@ import kotlinx.android.synthetic.main.activity_tes.*
 // [v] Save Progress after clear tes
 // [v] Refactor Tes include list id of question
 // [v] Load user progress from firebase
-// [ ] button state based on user progress
-// [ ] Use model UserProgress to save to Firebase
+// [v] button state based on user progress
+// [v] Use model UserProgress to save to Firebase
 
 @AndroidEntryPoint
 class TesActivity : AppCompatActivity() {
@@ -53,11 +54,19 @@ class TesActivity : AppCompatActivity() {
         setupViews()
 
         initAdapter()
+
+        buttonHandler()
     }
 
     override fun onResume() {
         super.onResume()
         observe()
+    }
+
+    private fun buttonHandler() {
+        btn_hasil.setOnClickListener {
+            //TODO goto hasil_activity
+        }
     }
 
     private fun observe() {
@@ -68,14 +77,12 @@ class TesActivity : AppCompatActivity() {
         tesViewModel.userProgress.observe(this, Observer { userProgress ->
             userProgress?.let {
                 adapter.setUserProgress(getUserProgress(it), userProgress.skor_kat, userId)
+                toggleButtonHasil(it)
             }
         })
         tesViewModel.tes.observe(this, Observer { tes ->
             adapter.setTes(tes)
         })
-        tesViewModel.userProgress.observe(this){
-            //Data received
-        }
     }
 
     private fun initAdapter() {
@@ -89,6 +96,13 @@ class TesActivity : AppCompatActivity() {
             if(skor==0) return index
         }
         return 0
+    }
+
+    private fun toggleButtonHasil(it: JawabanUser){
+        if (it.skor_kat[5] != 0)
+            btn_hasil.visibility = View.VISIBLE
+        else
+            btn_hasil.visibility = View.INVISIBLE
     }
 
     private fun setupViews() {
