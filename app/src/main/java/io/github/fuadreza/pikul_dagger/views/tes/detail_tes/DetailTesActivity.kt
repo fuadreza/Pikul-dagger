@@ -47,7 +47,9 @@ class DetailTesActivity : AppCompatActivity() {
 
     private var skor: Int? = null
 
-    private var list_skor: ArrayList<Int> = arrayListOf()
+    private var userId: String? = null
+
+    private var list_skor: ArrayList<Int>? = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -55,10 +57,13 @@ class DetailTesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail_tes)
         supportActionBar?.hide()
 
-        intent?.let {
-            tes = it.getSerializableExtra(TesAdapter.EXTRA_TES) as Tes
-        }
         list_skor = arrayListOf(0, 0, 0, 0, 0, 0)
+        intent?.let {
+            userId = it.getStringExtra(TesAdapter.EXTRA_UID)
+            tes = it.getSerializableExtra(TesAdapter.EXTRA_TES) as Tes
+            list_skor = it.getIntegerArrayListExtra(TesAdapter.EXTRA_SKOR)
+        }
+
         lifecycle.addObserver(detailTesViewModel)
 
         btnHandler()
@@ -129,7 +134,7 @@ class DetailTesActivity : AppCompatActivity() {
         }
     }
 
-    private fun resetButtonState(){
+    private fun resetButtonState() {
         sbJawaban.progress = 2
         btnLanjut.isClickable = true
         btnLanjut.setBackgroundColor(resources.getColor(R.color.accent))
@@ -143,40 +148,42 @@ class DetailTesActivity : AppCompatActivity() {
     private fun saveLastScore() {
         if (!list_skor.isNullOrEmpty()) {
             when (tes.type) {
-                "R" -> {
+                "1" -> {
                     skor?.let {
-                        list_skor[0] = it
+                        list_skor!![0] = it
                     }
                 }
-                "I" -> {
+                "2" -> {
                     skor?.let {
-                        list_skor[1] = it
+                        list_skor!![1] = it
                     }
                 }
-                "A" -> {
+                "3" -> {
                     skor?.let {
-                        list_skor[2] = it
+                        list_skor!![2] = it
                     }
                 }
-                "S" -> {
+                "4" -> {
                     skor?.let {
-                        list_skor[3] = it
+                        list_skor!![3] = it
                     }
                 }
-                "E" -> {
+                "5" -> {
                     skor?.let {
-                        list_skor[4] = it
+                        list_skor!![4] = it
                     }
                 }
-                "C" -> {
+                "6" -> {
                     skor?.let {
-                        list_skor[5] = it
+                        list_skor!![5] = it
                     }
                 }
                 else -> {
                 }
             }
-            detailTesViewModel.saveUserScore(JawabanUser("awaaw", list_skor))
+            list_skor?.let {
+                detailTesViewModel.saveUserScore(JawabanUser(userId.toString(), it))
+            }
         }
     }
 

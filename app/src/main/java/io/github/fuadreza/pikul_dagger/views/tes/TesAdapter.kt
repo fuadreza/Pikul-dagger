@@ -18,6 +18,8 @@ class TesAdapter internal constructor(private var context: Context) :
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var tes = emptyList<Tes>()
+    private var skorTes = arrayListOf<Int>()
+    private var userId = ""
 
     private var userProgress = 0
 
@@ -40,6 +42,8 @@ class TesAdapter internal constructor(private var context: Context) :
                 val intent = Intent(parent.context, DetailTesActivity::class.java)
                 val bundle = tes[pos]
                 intent.putExtra(EXTRA_TES, bundle)
+                intent.putExtra(EXTRA_SKOR, skorTes)
+                intent.putExtra(EXTRA_UID, userId)
                 parent.context.startActivity(intent)
             } else {
                 Toast.makeText(parent.context, "Selesaikan tes sebelumnya", Toast.LENGTH_LONG)
@@ -62,12 +66,20 @@ class TesAdapter internal constructor(private var context: Context) :
         notifyDataSetChanged()
     }
 
-    internal fun setUserProgress(userProgress: Int){
+    internal fun setUserProgress(
+        userProgress: Int,
+        skorTes: ArrayList<Int>,
+        userId: String?
+    ){
         this.userProgress = userProgress
+        this.skorTes = skorTes
+        this.userId = userId.toString()
         notifyDataSetChanged()
     }
 
     companion object {
+        const val EXTRA_UID = "UID"
         const val EXTRA_TES = "TES"
+        const val EXTRA_SKOR = "SKOR"
     }
 }

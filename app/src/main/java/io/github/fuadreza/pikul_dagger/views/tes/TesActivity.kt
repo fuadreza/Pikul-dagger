@@ -1,7 +1,6 @@
 package io.github.fuadreza.pikul_dagger.views.tes
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -9,6 +8,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.fuadreza.pikul_dagger.R
+import io.github.fuadreza.pikul_dagger.model.JawabanUser
 import kotlinx.android.synthetic.main.activity_tes.*
 
 /**
@@ -35,6 +35,10 @@ class TesActivity : AppCompatActivity() {
 
     private lateinit var adapter: TesAdapter
 
+    private var list_skor: ArrayList<Int> = arrayListOf()
+
+    private var userId: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -44,6 +48,7 @@ class TesActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         lifecycle.addObserver(tesViewModel)
+        list_skor = arrayListOf(0, 0, 0, 0, 0, 0)
 
         setupViews()
 
@@ -58,10 +63,11 @@ class TesActivity : AppCompatActivity() {
     private fun observe() {
         tesViewModel.userId.observe(this){
             tesViewModel.fetchUserProgress(it)
+            userId = it
         }
         tesViewModel.userProgress.observe(this, Observer { userProgress ->
             userProgress?.let {
-//                adapter.setUserProgress(it.progress!!.toInt())
+                adapter.setUserProgress(getUserProgress(it), userProgress.skor_kat, userId)
             }
         })
         tesViewModel.tes.observe(this, Observer { tes ->
@@ -76,6 +82,13 @@ class TesActivity : AppCompatActivity() {
         adapter = TesAdapter(this)
         rv_tes.layoutManager = GridLayoutManager(this, 3)
         rv_tes.adapter = adapter
+    }
+
+    private fun getUserProgress(it: JawabanUser): Int {
+        it.skor_kat.forEachIndexed {index, skor ->
+            if(skor==0) return index
+        }
+        return 0
     }
 
     private fun setupViews() {
