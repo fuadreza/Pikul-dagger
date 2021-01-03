@@ -36,8 +36,6 @@ class TesActivity : AppCompatActivity() {
 
     private lateinit var adapter: TesAdapter
 
-    private var list_skor: ArrayList<Int> = arrayListOf()
-
     private var userId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +47,6 @@ class TesActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         lifecycle.addObserver(tesViewModel)
-        list_skor = arrayListOf(0, 0, 0, 0, 0, 0)
 
         setupViews()
 
