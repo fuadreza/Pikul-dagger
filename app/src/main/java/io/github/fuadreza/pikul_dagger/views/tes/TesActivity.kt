@@ -28,7 +28,9 @@ import kotlinx.android.synthetic.main.activity_tes.*
 // [v] Load user progress from firebase
 // [v] button state based on user progress
 // [v] Use model UserProgress to save to Firebase
-// [ ] Show/Hide Button hasil tes
+// [v] Show/Hide Button hasil tes
+// [v] Checked for answered tes
+// [ ] Re-test button
 
 @AndroidEntryPoint
 class TesActivity : AppCompatActivity() {
@@ -98,7 +100,7 @@ class TesActivity : AppCompatActivity() {
         it.skor_kat.forEachIndexed {index, skor ->
             if(skor==0) return index
         }
-        return 0
+        return 6
     }
 
     private fun toggleButtonHasil(it: JawabanUser){

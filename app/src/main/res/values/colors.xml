@@ -19,4 +19,6 @@
     <color name="black">#272727</color>
     <color name="lightBlack">#454545</color>
 
+    <color name="correct">#22FF6C</color>
+
 </resources>
