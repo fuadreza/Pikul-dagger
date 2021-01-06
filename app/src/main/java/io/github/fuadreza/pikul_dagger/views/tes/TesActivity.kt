@@ -30,7 +30,9 @@ import kotlinx.android.synthetic.main.activity_tes.*
 // [v] Use model UserProgress to save to Firebase
 // [v] Show/Hide Button hasil tes
 // [v] Checked for answered tes
-// [ ] Re-test button
+// [v] Re-test button
+// [ ] Re-test function
+// [ ] Hasil tes route
 
 @AndroidEntryPoint
 class TesActivity : AppCompatActivity() {
