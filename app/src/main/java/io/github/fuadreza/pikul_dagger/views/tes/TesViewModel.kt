@@ -8,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.toObject
 import io.github.fuadreza.pikul_dagger.model.JawabanUser
 import io.github.fuadreza.pikul_dagger.model.SoalTes
+import io.github.fuadreza.pikul_dagger.repository.SoalRepository
 import io.github.fuadreza.pikul_dagger.repository.UserProgressRepository
 import io.github.fuadreza.pikul_dagger.repository.UserRepository
 import io.github.fuadreza.pikul_dagger.views.tes.model.Tes
@@ -19,7 +20,7 @@ import kotlinx.coroutines.launch
  *
  */
 
-class TesViewModel @ViewModelInject constructor(private val repo: UserProgressRepository, private val userRepository: UserRepository) :
+class TesViewModel @ViewModelInject constructor(private val repo: UserProgressRepository, private val userRepository: UserRepository, private val soalRepository: SoalRepository) :
     ViewModel(),
     LifecycleObserver {
 
@@ -74,10 +75,21 @@ class TesViewModel @ViewModelInject constructor(private val repo: UserProgressRe
         _tes.value = listTes
     }
 
+    fun resetJawaban(uid: String) {
+        soalRepository.saveUserScore(JawabanUser(uid, arrayListOf(0,0,0,0,0,0)))
+            .addOnSuccessListener {
+
+            }
+            .addOnFailureListener {
+
+            }
+    }
+
 }
 
 sealed class TesState {
     object LoadUnivSuccess : TesState()
+    object LoadingState: TesState()
 
     data class ShowToast(var message: String) : TesState()
     data class OnLoadUnivState(val soalList: List<SoalTes>) : TesState()

@@ -63,10 +63,15 @@ class TesAdapter internal constructor(private var context: Context) :
         holder.number.text = tes[position].name
         if (position <= userProgress) {
             holder.number.setTextColor(ContextCompat.getColor(context, R.color.primary))
+        }else {
+            holder.number.setTextColor(ContextCompat.getColor(context, R.color.grey))
         }
         if (position < userProgress) {
             holder.number.visibility = View.INVISIBLE
             holder.checked.visibility = View.VISIBLE
+        }else {
+            holder.number.visibility = View.VISIBLE
+            holder.checked.visibility = View.INVISIBLE
         }
     }
 

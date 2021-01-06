@@ -1,8 +1,10 @@
 package io.github.fuadreza.pikul_dagger.views.tes
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
@@ -31,7 +33,7 @@ import kotlinx.android.synthetic.main.activity_tes.*
 // [v] Show/Hide Button hasil tes
 // [v] Checked for answered tes
 // [v] Re-test button
-// [ ] Re-test function
+// [v] Re-test function
 // [ ] Hasil tes route
 
 @AndroidEntryPoint
@@ -72,7 +74,7 @@ class TesActivity : AppCompatActivity() {
     }
 
     private fun observe() {
-        tesViewModel.userId.observe(this){
+        tesViewModel.userId.observe(this) {
             tesViewModel.fetchUserProgress(it)
             userId = it
         }
@@ -80,10 +82,30 @@ class TesActivity : AppCompatActivity() {
             userProgress?.let {
                 adapter.setUserProgress(getUserProgress(it), userProgress.skor_kat, userId)
                 toggleButtonHasil(it)
-                if(it.skor_kat[5] != 0){
+                if (it.skor_kat[5] != 0) {
                     btn_hasil.visibility = View.VISIBLE
-                }else{
+                    btn_ulang.visibility = View.VISIBLE
+                    btn_ulang.setOnClickListener {
+                        val dialogAlert = AlertDialog.Builder(this)
+                        dialogAlert.setMessage("Apakah ingin melakukan tes ulang?")
+                            .setCancelable(true)
+                            .setPositiveButton(
+                                "Ulangi",
+                                DialogInterface.OnClickListener { dialogInterface, i ->
+                                    tesViewModel.resetJawaban(userProgress.uid)
+                                })
+                            .setNegativeButton(
+                                "Batal",
+                                DialogInterface.OnClickListener { dialogInterface, i ->
+                                    dialogInterface.cancel()
+                                })
+                        val alert = dialogAlert.create()
+                        alert.setTitle("Ulangi Tes")
+                        alert.show()
+                    }
+                } else {
                     btn_hasil.visibility = View.INVISIBLE
+                    btn_ulang.visibility = View.INVISIBLE
                 }
             }
         })
@@ -99,13 +121,13 @@ class TesActivity : AppCompatActivity() {
     }
 
     private fun getUserProgress(it: JawabanUser): Int {
-        it.skor_kat.forEachIndexed {index, skor ->
-            if(skor==0) return index
+        it.skor_kat.forEachIndexed { index, skor ->
+            if (skor == 0) return index
         }
         return 6
     }
 
-    private fun toggleButtonHasil(it: JawabanUser){
+    private fun toggleButtonHasil(it: JawabanUser) {
         if (it.skor_kat[5] != 0)
             btn_hasil.visibility = View.VISIBLE
         else
