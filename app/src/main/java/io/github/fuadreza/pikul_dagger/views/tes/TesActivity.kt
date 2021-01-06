@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_tes.*
 // [v] Load user progress from firebase
 // [v] button state based on user progress
 // [v] Use model UserProgress to save to Firebase
+// [ ] Show/Hide Button hasil tes
 
 @AndroidEntryPoint
 class TesActivity : AppCompatActivity() {
@@ -75,6 +76,11 @@ class TesActivity : AppCompatActivity() {
             userProgress?.let {
                 adapter.setUserProgress(getUserProgress(it), userProgress.skor_kat, userId)
                 toggleButtonHasil(it)
+                if(it.skor_kat[5] != 0){
+                    btn_hasil.visibility = View.VISIBLE
+                }else{
+                    btn_hasil.visibility = View.INVISIBLE
+                }
             }
         })
         tesViewModel.tes.observe(this, Observer { tes ->
