@@ -30,6 +30,7 @@
         <activity android:name=".views.tes.TesActivity"/>
         <activity android:name=".views.tes.detail_tes.DetailTesActivity"/>
         <activity android:name=".views.tes.TesWarningActivity"/>
+        <activity android:name=".views.tes.hasil_tes.HasilTesActivity"/>
 
     </application>
 

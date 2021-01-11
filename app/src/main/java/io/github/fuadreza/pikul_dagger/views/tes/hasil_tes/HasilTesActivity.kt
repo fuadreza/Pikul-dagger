@@ -3,15 +3,17 @@ package io.github.fuadreza.pikul_dagger.views.tes.hasil_tes
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.fuadreza.pikul_dagger.R
 
 //TODO Hasil Tes
-// [ ] Halaman Hasil Tes
+// [v] Halaman Hasil Tes
 // [ ] Get User Score
 // [ ] Sort top 3 kategori
 // [ ] Get recommendation based on top 3
 // [ ] Display recommendation
 
+@AndroidEntryPoint
 class HasilTesActivity: AppCompatActivity() {
 
     private val viewModel : HasilTesViewModel by viewModels()

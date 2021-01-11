@@ -12,6 +12,7 @@
     <color name="primaryDark">#303F9F</color>
 
     <color name="grey">#7E7E7E</color>
+    <color name="light_grey">#D6D6D6</color>
     <color name="light">#FAFAFA</color>
 
     <color name="colorBackgroundGrey">#EDEDED</color>
