@@ -1,12 +1,17 @@
 package io.github.fuadreza.pikul_dagger.views.tes
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.fuadreza.pikul_dagger.R
+import io.github.fuadreza.pikul_dagger.model.JawabanUser
 import kotlinx.android.synthetic.main.activity_tes.*
 
 /**
@@ -20,8 +25,16 @@ import kotlinx.android.synthetic.main.activity_tes.*
 // [v] Onclick menu
 // [v] Enable and disable button based on Progress
 // [v] Load progress from database
-// [ ] Save Progress after clear tes
+// [v] Save Progress after clear tes
 // [v] Refactor Tes include list id of question
+// [v] Load user progress from firebase
+// [v] button state based on user progress
+// [v] Use model UserProgress to save to Firebase
+// [v] Show/Hide Button hasil tes
+// [v] Checked for answered tes
+// [v] Re-test button
+// [v] Re-test function
+// [ ] Hasil tes route
 
 @AndroidEntryPoint
 class TesActivity : AppCompatActivity() {
@@ -29,6 +42,8 @@ class TesActivity : AppCompatActivity() {
     private val tesViewModel: TesViewModel by viewModels()
 
     private lateinit var adapter: TesAdapter
+
+    private var userId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -43,6 +58,8 @@ class TesActivity : AppCompatActivity() {
         setupViews()
 
         initAdapter()
+
+        buttonHandler()
     }
 
     override fun onResume() {
@@ -50,10 +67,46 @@ class TesActivity : AppCompatActivity() {
         observe()
     }
 
+    private fun buttonHandler() {
+        btn_hasil.setOnClickListener {
+            //TODO goto hasil_activity
+        }
+    }
+
     private fun observe() {
+        tesViewModel.userId.observe(this) {
+            tesViewModel.fetchUserProgress(it)
+            userId = it
+        }
         tesViewModel.userProgress.observe(this, Observer { userProgress ->
             userProgress?.let {
-                adapter.setUserProgress(it.progress!!.toInt())
+                adapter.setUserProgress(getUserProgress(it), userProgress.skor_kat, userId)
+                toggleButtonHasil(it)
+                if (it.skor_kat[5] != 0) {
+                    btn_hasil.visibility = View.VISIBLE
+                    btn_ulang.visibility = View.VISIBLE
+                    btn_ulang.setOnClickListener {
+                        val dialogAlert = AlertDialog.Builder(this)
+                        dialogAlert.setMessage("Apakah ingin melakukan tes ulang?")
+                            .setCancelable(true)
+                            .setPositiveButton(
+                                "Ulangi",
+                                DialogInterface.OnClickListener { dialogInterface, i ->
+                                    tesViewModel.resetJawaban(userProgress.uid)
+                                })
+                            .setNegativeButton(
+                                "Batal",
+                                DialogInterface.OnClickListener { dialogInterface, i ->
+                                    dialogInterface.cancel()
+                                })
+                        val alert = dialogAlert.create()
+                        alert.setTitle("Ulangi Tes")
+                        alert.show()
+                    }
+                } else {
+                    btn_hasil.visibility = View.INVISIBLE
+                    btn_ulang.visibility = View.INVISIBLE
+                }
             }
         })
         tesViewModel.tes.observe(this, Observer { tes ->
@@ -65,6 +118,20 @@ class TesActivity : AppCompatActivity() {
         adapter = TesAdapter(this)
         rv_tes.layoutManager = GridLayoutManager(this, 3)
         rv_tes.adapter = adapter
+    }
+
+    private fun getUserProgress(it: JawabanUser): Int {
+        it.skor_kat.forEachIndexed { index, skor ->
+            if (skor == 0) return index
+        }
+        return 6
+    }
+
+    private fun toggleButtonHasil(it: JawabanUser) {
+        if (it.skor_kat[5] != 0)
+            btn_hasil.visibility = View.VISIBLE
+        else
+            btn_hasil.visibility = View.INVISIBLE
     }
 
     private fun setupViews() {
