@@ -23,6 +23,10 @@ class HasilTesActivity: AppCompatActivity() {
 
     private var userId: String? = null
 
+    private val kategoriCode = arrayOf("R", "I", "A", "S", "E", "C")
+
+    private var topScoreCode: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hasil_tes)
