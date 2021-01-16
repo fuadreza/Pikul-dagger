@@ -23,6 +23,9 @@ class HasilTesViewModel @ViewModelInject constructor(
     private val _userProgress = MutableLiveData<JawabanUser>()
     var userProgress: LiveData<JawabanUser> = _userProgress
 
+    private val _userKategori = MutableLiveData<String>()
+    val userKategori: LiveData<String> = _userKategori
+
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun init() {
         fetchUser()
@@ -48,5 +51,9 @@ class HasilTesViewModel @ViewModelInject constructor(
         }
     }
 
+    fun fetchUserKategori(kategori: String){
+        viewModelScope.launch(Dispatchers.IO) {
 
+        }
+    }
 }

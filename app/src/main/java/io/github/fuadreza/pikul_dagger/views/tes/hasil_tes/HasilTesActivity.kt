@@ -1,31 +1,31 @@
 package io.github.fuadreza.pikul_dagger.views.tes.hasil_tes
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.model.JawabanUser
+import io.github.fuadreza.pikul_dagger.utils.getKategoriCode
 import kotlinx.android.synthetic.main.activity_hasil_tes.*
 
 //TODO Hasil Tes
 // [v] Halaman Hasil Tes
 // [v] Get User Score
-// [ ] Sort top 3 kategori
+// [v] Sort top 3 kategori
 // [ ] Get recommendation based on top 3
 // [ ] Display recommendation
 
 @AndroidEntryPoint
-class HasilTesActivity: AppCompatActivity() {
+class HasilTesActivity : AppCompatActivity() {
 
-    private val viewModel : HasilTesViewModel by viewModels()
+    private val viewModel: HasilTesViewModel by viewModels()
 
     private var userId: String? = null
 
-    private val kategoriCode = arrayOf("R", "I", "A", "S", "E", "C")
-
-    private var topScoreCode: String? = null
+    private var userKategoriCode: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,30 +48,35 @@ class HasilTesActivity: AppCompatActivity() {
             viewModel.fetchUserProgress(it)
             userId = it
         }
-        viewModel.userProgress.observe(this){progress ->
+        viewModel.userProgress.observe(this) { progress ->
             setupScore(progress)
+            userKategoriCode = getKategoriCode(progress.skor_kat)
+            Log.d("KATT", "kategori: $userKategoriCode")
         }
     }
 
+    private fun observeRekomendasi() {
+        viewModel.userKategori.observe(this){
+
+        }
+    }
+
+    private fun btnHandler() {
+
+    }
+
     private fun setupScore(score: JawabanUser) {
-        score.skor_kat.forEachIndexed{index, it ->
-            when(index){
-                0-> tv_kategori_r.text = it.toString()
+        score.skor_kat.forEachIndexed { index, it ->
+            when (index) {
+                0 -> tv_kategori_r.text = it.toString()
                 1 -> tv_kategori_i.text = it.toString()
                 2 -> tv_kategori_a.text = it.toString()
                 3 -> tv_kategori_s.text = it.toString()
                 4 -> tv_kategori_e.text = it.toString()
                 5 -> tv_kategori_c.text = it.toString()
-                else ->{}
+                else -> {
+                }
             }
         }
-    }
-
-    private fun observeRekomendasi() {
-
-    }
-
-    private fun btnHandler() {
-
     }
 }
