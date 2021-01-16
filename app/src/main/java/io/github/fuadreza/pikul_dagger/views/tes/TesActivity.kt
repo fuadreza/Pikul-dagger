@@ -1,6 +1,7 @@
 package io.github.fuadreza.pikul_dagger.views.tes
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.model.JawabanUser
+import io.github.fuadreza.pikul_dagger.views.tes.hasil_tes.HasilTesActivity
 import kotlinx.android.synthetic.main.activity_tes.*
 
 /**
@@ -69,7 +71,7 @@ class TesActivity : AppCompatActivity() {
 
     private fun buttonHandler() {
         btn_hasil.setOnClickListener {
-            //TODO goto hasil_activity
+            startActivity(Intent(this, HasilTesActivity::class.java))
         }
     }
 
