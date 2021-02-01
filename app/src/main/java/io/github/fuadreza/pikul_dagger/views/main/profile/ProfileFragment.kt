@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.google.firebase.auth.FirebaseUser
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.views.setting.SettingActivity
@@ -18,6 +19,8 @@ import kotlinx.android.synthetic.main.fragment_profile.*
  */
 
 class ProfileFragment : Fragment() {
+
+    private val viewModel: ProfileViewModel by viewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
