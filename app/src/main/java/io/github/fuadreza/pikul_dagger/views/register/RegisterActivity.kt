@@ -41,11 +41,17 @@ class RegisterActivity : AppCompatActivity(), LifecycleOwner {
 
     private fun setupViews() {
         btn_register.setOnClickListener {
-            registerViewModel.register(
-                ed_first.text.toString() + " " + ed_last.text.toString(),
-                ed_email.text.toString(),
-                ed_password.text.toString(),
-                ed_confirm_password.text.toString()
+//            registerViewModel.register(
+//                ed_first.text.toString(),
+//                ed_last.text.toString(),
+//                ed_email.text.toString(),
+//                ed_password.text.toString(),
+//                ed_confirm_password.text.toString()
+//            )
+            registerViewModel.saveUser(
+                ed_first.text.toString(),
+                ed_last.text.toString(),
+                ed_email.text.toString()
             )
         }
     }
@@ -53,10 +59,20 @@ class RegisterActivity : AppCompatActivity(), LifecycleOwner {
     private fun handleUIState(it: RegisterState) {
         when (it) {
             is RegisterState.RegisterSuccess -> {
+                registerViewModel.saveUser(
+                    ed_first.text.toString(),
+                    ed_last.text.toString(),
+                    ed_email.text.toString()
+                )
+            }
+            is RegisterState.RegisterError -> {
+                isLoading(false)
+            }
+            is RegisterState.SaveUserSuccess -> {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
-            is RegisterState.RegisterError -> {
+            is RegisterState.SaveUserError -> {
                 isLoading(false)
             }
             is RegisterState.ShowToast -> {

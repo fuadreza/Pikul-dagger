@@ -1,23 +1,27 @@
 package io.github.fuadreza.pikul_dagger.repository
 
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.FirebaseFirestore
+import io.github.fuadreza.pikul_dagger.model.UserProfile
+import javax.inject.Inject
 
 /**
  * Dibuat dengan kerjakerasbagaiquda oleh Shifu pada tanggal 24/06/2020.
  *
  */
 
-class UserRepository {
+class UserRepository @Inject constructor(private val auth: FirebaseAuth, private val db: FirebaseFirestore) {
 
-    private val firebaseAuth = FirebaseAuth.getInstance()
-
-    var user: FirebaseUser? = firebaseAuth.currentUser
+    var user: FirebaseUser? = auth.currentUser
 
     var status: String = ""
 
     var registerStatus: String = ""
+
+    var uid: String = ""
 
     fun isUserLoggedIn(): Boolean {
         return user != null
@@ -47,6 +51,7 @@ class UserRepository {
                     .build()
 
                 user?.updateProfile(profileUpdate)
+                uid = user?.uid.toString()
                 registerStatus = "success"
             }
             .addOnFailureListener {
@@ -54,8 +59,13 @@ class UserRepository {
             }
     }
 
+    fun saveUserData(userProfile: UserProfile) : Task<Void>{
+        val user = auth.currentUser
+        return db.collection("users").document("aaaa").set(UserProfile(uid, userProfile.firstName, userProfile.lastName, userProfile.email, userProfile.urlPic))
+    }
+
     fun logoutUser() {
-        firebaseAuth.signOut()
+        auth.signOut()
         user = null
     }
 }

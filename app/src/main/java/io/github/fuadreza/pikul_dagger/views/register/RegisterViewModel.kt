@@ -5,6 +5,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.github.fuadreza.pikul_dagger.model.UserProfile
 import io.github.fuadreza.pikul_dagger.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,25 +23,37 @@ class RegisterViewModel @ViewModelInject constructor(private val userRepository:
     val registerState: LiveData<RegisterState>
         get() = _registerState
 
-    fun register(name: String, email: String, password: String, confirmPassword: String) {
+    fun register(firstName: String, lastName: String, email: String, password: String, confirmPassword: String) {
         _registerState.value = RegisterState.IsLoading(true)
 
-        if (validate(name, email, password, confirmPassword)) {
+        if (validate(firstName, email, password, confirmPassword)) {
             CoroutineScope(Dispatchers.IO).launch {
-                userRepository.register(name, email, password)
+                userRepository.register("$firstName $lastName", email, password)
                 if (userRepository.registerStatus == "success") {
-                    _registerState.value = RegisterState.RegisterSuccess
-                    _registerState.value = RegisterState.ShowToast("Akun berhasil dibuat")
+                    _registerState.postValue(RegisterState.RegisterSuccess)
                 } else {
-                    _registerState.value = RegisterState.ShowToast("Gagal membuat akun")
-                    _registerState.value = RegisterState.RegisterError
+                    _registerState.postValue(RegisterState.ShowToast("Gagal mendaftarkan akun"))
+                    _registerState.postValue(RegisterState.RegisterError)
                 }
             }
         }
         _registerState.value = RegisterState.IsLoading(false)
     }
 
-    fun validate(name: String, email: String, password: String, confirmPassword: String): Boolean {
+    fun saveUser(firstName: String, lastName: String, email: String){
+        userRepository.saveUserData(UserProfile("", firstName, lastName, email, ""))
+            .addOnSuccessListener {
+                _registerState.postValue(RegisterState.SaveUserSuccess)
+                _registerState.postValue(RegisterState.ShowToast("Akun berhasil dibuat"))
+            }
+            .addOnFailureListener{
+                it.printStackTrace()
+                _registerState.postValue(RegisterState.ShowToast("Gagal menyimpan akun"))
+                _registerState.postValue(RegisterState.SaveUserError)
+            }
+    }
+
+    private fun validate(name: String, email: String, password: String, confirmPassword: String): Boolean {
         if (name.isBlank()) {
             _registerState.value = RegisterState.ShowToast("Nama tidak boleh kosong")
         } else {
