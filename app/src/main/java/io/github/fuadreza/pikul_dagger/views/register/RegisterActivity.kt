@@ -2,6 +2,7 @@ package io.github.fuadreza.pikul_dagger.views.register
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -23,14 +24,19 @@ class RegisterActivity : AppCompatActivity(), LifecycleOwner {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // TODO tampilan register
         setContentView(R.layout.activity_register)
         supportActionBar?.hide()
 
         lifecycle.addObserver(registerViewModel)
 
-        observe()
-
         setupViews()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        observe()
     }
 
     private fun observe() {
@@ -41,17 +47,12 @@ class RegisterActivity : AppCompatActivity(), LifecycleOwner {
 
     private fun setupViews() {
         btn_register.setOnClickListener {
-//            registerViewModel.register(
-//                ed_first.text.toString(),
-//                ed_last.text.toString(),
-//                ed_email.text.toString(),
-//                ed_password.text.toString(),
-//                ed_confirm_password.text.toString()
-//            )
-            registerViewModel.saveUser(
+            registerViewModel.register(
                 ed_first.text.toString(),
                 ed_last.text.toString(),
-                ed_email.text.toString()
+                ed_email.text.toString(),
+                ed_password.text.toString(),
+                ed_confirm_password.text.toString()
             )
         }
     }
@@ -83,7 +84,9 @@ class RegisterActivity : AppCompatActivity(), LifecycleOwner {
     }
 
     private fun isLoading(state: Boolean) {
-
+        // TODO Loading Not implemented
+        if(state) loading.visibility = View.VISIBLE
+        else loading.visibility = View.GONE
     }
 
     private fun toast(message: String?) = Toast.makeText(this, message, Toast.LENGTH_LONG).show()

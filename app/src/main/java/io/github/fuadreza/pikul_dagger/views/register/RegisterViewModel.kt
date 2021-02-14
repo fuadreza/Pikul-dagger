@@ -5,11 +5,10 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import io.github.fuadreza.pikul_dagger.model.UserProfile
 import io.github.fuadreza.pikul_dagger.repository.UserRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 /**
  * Dibuat dengan kerjakerasbagaiquda oleh Shifu pada tanggal 29/06/2020.
@@ -23,37 +22,54 @@ class RegisterViewModel @ViewModelInject constructor(private val userRepository:
     val registerState: LiveData<RegisterState>
         get() = _registerState
 
-    fun register(firstName: String, lastName: String, email: String, password: String, confirmPassword: String) {
+    fun register(
+        firstName: String,
+        lastName: String,
+        email: String,
+        password: String,
+        confirmPassword: String
+    ) {
         _registerState.value = RegisterState.IsLoading(true)
 
         if (validate(firstName, email, password, confirmPassword)) {
-            CoroutineScope(Dispatchers.IO).launch {
                 userRepository.register("$firstName $lastName", email, password)
-                if (userRepository.registerStatus == "success") {
-                    _registerState.postValue(RegisterState.RegisterSuccess)
-                } else {
-                    _registerState.postValue(RegisterState.ShowToast("Gagal mendaftarkan akun"))
-                    _registerState.postValue(RegisterState.RegisterError)
-                }
-            }
+                    .addOnSuccessListener {
+                        // Update profile
+                        val user = FirebaseAuth.getInstance().currentUser
+                        val profileUpdate = UserProfileChangeRequest.Builder()
+                            .setDisplayName("$firstName $lastName")
+                            .build()
+                        user?.updateProfile(profileUpdate)
+
+                        _registerState.postValue(RegisterState.RegisterSuccess)
+                    }
+                    .addOnFailureListener {
+                        _registerState.postValue(RegisterState.ShowToast("Gagal mendaftarkan akun"))
+                        _registerState.postValue(RegisterState.RegisterError)
+                    }
         }
         _registerState.value = RegisterState.IsLoading(false)
     }
 
-    fun saveUser(firstName: String, lastName: String, email: String){
+    fun saveUser(firstName: String, lastName: String, email: String) {
+        _registerState.value = RegisterState.IsLoading(true)
         userRepository.saveUserData(UserProfile("", firstName, lastName, email, ""))
             .addOnSuccessListener {
                 _registerState.postValue(RegisterState.SaveUserSuccess)
-                _registerState.postValue(RegisterState.ShowToast("Akun berhasil dibuat"))
             }
-            .addOnFailureListener{
+            .addOnFailureListener {
                 it.printStackTrace()
-                _registerState.postValue(RegisterState.ShowToast("Gagal menyimpan akun"))
                 _registerState.postValue(RegisterState.SaveUserError)
             }
+        _registerState.value = RegisterState.IsLoading(false)
     }
 
-    private fun validate(name: String, email: String, password: String, confirmPassword: String): Boolean {
+    private fun validate(
+        name: String,
+        email: String,
+        password: String,
+        confirmPassword: String
+    ): Boolean {
         if (name.isBlank()) {
             _registerState.value = RegisterState.ShowToast("Nama tidak boleh kosong")
         } else {
