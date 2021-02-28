@@ -2,6 +2,7 @@ package io.github.fuadreza.pikul_dagger.views.login
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.google.firebase.auth.FirebaseAuthException
 import io.github.fuadreza.pikul_dagger.repository.UserRepository
 import kotlinx.coroutines.launch
 
@@ -40,7 +41,23 @@ class LoginViewModel @ViewModelInject constructor(private val userRepository: Us
                     _loginState.value = LoginState.IsLoggedIn
                 }
                 .addOnFailureListener {
-                    _loginState.value = LoginState.LoginError("Email atau password salah")
+                    val errorCode = (it as FirebaseAuthException?)?.errorCode
+                    var message = ""
+                    when (errorCode) {
+                        "ERROR_INVALID_EMAIL" -> {
+                            message = "Email salah"
+                        }
+                        "ERROR_WRONG_PASSWORD" -> {
+                            message = "Password salah"
+                        }
+                        "ERROR_USER_NOT_FOUND" -> {
+                            message = "User tidak terdaftar"
+                        }
+                        else -> {
+                            message = "Email atau password tidak tepat"
+                        }
+                    }
+                    _loginState.value = LoginState.LoginError(message)
                     _loginState.value = LoginState.IsLoading(false)
                 }
 
