@@ -37,5 +37,7 @@
     <string name="email">Email</string>
     <string name="last_name">Nama Belakang</string>
     <string name="first_name">Nama Depan</string>
+    <string name="loading_name">Loading Name...</string>
+    <string name="loading_email">Loading Email...</string>
 
 </resources>

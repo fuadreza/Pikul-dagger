@@ -50,7 +50,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="16dp"
                 android:src="@drawable/ic_settings"
-                android:tint="@color/grey"
+                app:tint="@color/grey"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -61,7 +61,7 @@
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/content_description"
                 android:src="@drawable/ic_profile"
-                android:tint="@color/lightBlack"
+                app:tint="@color/lightBlack"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -76,6 +76,7 @@
                 android:textColor="@color/primary"
                 android:textSize="21sp"
                 android:textStyle="bold"
+                android:text="@string/loading_name"
                 app:layout_constraintTop_toBottomOf="@id/iv_profile"
                 tools:text="Fulan Fulanah" />
 
@@ -89,6 +90,7 @@
                 android:textColor="@color/grey"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                android:text="@string/loading_email"
                 app:layout_constraintTop_toBottomOf="@id/tv_nama"
                 tools:text="fulanfulanah@gmail.com" />
 
