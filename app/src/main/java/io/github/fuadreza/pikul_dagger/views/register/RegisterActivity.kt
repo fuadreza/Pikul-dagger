@@ -55,6 +55,12 @@ class RegisterActivity : AppCompatActivity(), LifecycleOwner {
                 ed_confirm_password.text.toString()
             )
         }
+        btn_sign_in.setOnClickListener{
+            startActivity(
+                Intent(this, LoginActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+            finish()
+        }
     }
 
     private fun handleUIState(it: RegisterState) {
