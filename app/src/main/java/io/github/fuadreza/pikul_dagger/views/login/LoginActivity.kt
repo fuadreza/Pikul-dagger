@@ -2,9 +2,11 @@ package io.github.fuadreza.pikul_dagger.views.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,6 +67,7 @@ class LoginActivity : AppCompatActivity(), LifecycleOwner {
             }
             is LoginState.LoginError -> {
                 isLoading(false)
+                toast(it.msg)
             }
             is LoginState.ShowToast -> {
                 toast(it.msg)
@@ -74,11 +77,14 @@ class LoginActivity : AppCompatActivity(), LifecycleOwner {
     }
 
     private fun isLoading(state: Boolean) {
+        Log.d("LOADING", "STATE: $state")
         if (state) {
             btn_login.isEnabled = false
+            btn_login.setBackgroundColor(ContextCompat.getColor(this, R.color.grey))
             loading.isIndeterminate = true
         } else {
             btn_login.isEnabled = true
+            btn_login.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
             loading.apply {
                 isIndeterminate = false
                 progress = 0

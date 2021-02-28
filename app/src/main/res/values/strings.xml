@@ -16,6 +16,7 @@
 
     <!-- BASIC LABEL -->
     <string name="have_an_account">Sudah punya akun?</string>
+    <string name="dont_have_account">Belum punya akun? Daftar disini</string>
 
     <string name="rekomendasi_jurusan">Rekomendasi Jurusan</string>
     <string name="content_description">Gambar</string>

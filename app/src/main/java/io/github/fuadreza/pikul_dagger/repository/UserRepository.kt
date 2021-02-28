@@ -31,15 +31,8 @@ class UserRepository @Inject constructor(private val auth: FirebaseAuth, private
 //        userComponent = userComponentFactory.create()
     }
 
-    fun login(email: String, password: String) {
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                user = it.user
-                status = "success"
-            }
-            .addOnFailureListener {
-                status = "Failed Login, ${it.message}"
-            }
+    fun login(email: String, password: String): Task<AuthResult>{
+        return FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
     }
 
     fun register(name: String, email: String, password: String): Task<AuthResult> {

@@ -6,7 +6,7 @@ package io.github.fuadreza.pikul_dagger.views.login
  */
 sealed class LoginState {
     object LoginSuccess : LoginState()
-    object LoginError : LoginState()
+    data class LoginError(var msg: String) : LoginState()
     object IsLoggedIn : LoginState()
 
     data class ShowToast(var msg: String) : LoginState()
