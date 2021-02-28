@@ -16,9 +16,3 @@ class ProfileViewModel @ViewModelInject constructor(): ViewModel(), LifecycleObs
         }
     }
 }
-
-sealed class ProfileState {
-    object LoadProfileSuccess : ProfileState()
-    object LoadingState: ProfileState()
-
-}
