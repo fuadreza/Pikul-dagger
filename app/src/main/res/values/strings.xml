@@ -7,6 +7,7 @@
     <string name="title_profile">Profil</string>
     <string name="title_login">Masuk</string>
     <string name="register_header">Daftar dulu yuk!</string>
+    <string name="skor">Skor</string>
 
     <!-- BASIC BUTTON -->
     <string name="cari_univ">Cari Universitas</string>
@@ -39,5 +40,12 @@
     <string name="first_name">Nama Depan</string>
     <string name="loading_name">Loading Name...</string>
     <string name="loading_email">Loading Email...</string>
+    <string name="selesaikan_tes">Selesaikan tes terlebih dahulu</string>
+    <string name="realistic">Realistic</string>
+    <string name="investigative">Investigative</string>
+    <string name="artistic">Artistic</string>
+    <string name="social">Social</string>
+    <string name="enterprising">Enterprising</string>
+    <string name="conventional">Conventional</string>
 
 </resources>
