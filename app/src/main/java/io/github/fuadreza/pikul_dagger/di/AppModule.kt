@@ -40,8 +40,8 @@ object AppModule {
     }
 
     @Provides
-    fun providesUserProgressRepo(userProgressDao: UserProgressDao) =
-        UserProgressRepository(userProgressDao)
+    fun providesUserProgressRepo(auth: FirebaseAuth, userProgressDao: UserProgressDao) =
+        UserProgressRepository(auth, userProgressDao)
 
     @Provides
     @Singleton

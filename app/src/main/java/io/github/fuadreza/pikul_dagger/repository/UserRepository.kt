@@ -4,6 +4,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import io.github.fuadreza.pikul_dagger.model.UserProfile
 import javax.inject.Inject
@@ -47,6 +48,11 @@ class UserRepository @Inject constructor(private val auth: FirebaseAuth, private
     fun logoutUser() {
         auth.signOut()
         user = null
+    }
+
+    fun getUserProfile() : DocumentReference {
+        val user = auth.currentUser
+        return db.collection("users").document(user?.uid.toString())
     }
 }
 
