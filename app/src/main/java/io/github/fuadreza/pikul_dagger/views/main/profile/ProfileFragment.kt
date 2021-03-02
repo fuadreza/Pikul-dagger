@@ -1,5 +1,6 @@
 package io.github.fuadreza.pikul_dagger.views.main.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.model.JawabanUser
 import io.github.fuadreza.pikul_dagger.model.UserProfile
 import io.github.fuadreza.pikul_dagger.utils.toast
+import io.github.fuadreza.pikul_dagger.views.setting.SettingActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 /**
@@ -71,9 +73,9 @@ class ProfileFragment : Fragment(), LifecycleOwner {
         tv_nama.text = "${user?.firstName} ${user?.lastName}"
         tv_email.text = user?.email
 
-//        btn_edit.setOnClickListener {
-//            startActivity(Intent(view.context, SettingActivity::class.java))
-//        }
+        btn_edit.setOnClickListener {
+            startActivity(Intent(this.requireContext(), SettingActivity::class.java))
+        }
     }
 
     private fun setupProgress(progress: JawabanUser?) {
