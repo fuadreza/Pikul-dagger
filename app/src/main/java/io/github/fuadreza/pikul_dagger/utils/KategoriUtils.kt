@@ -38,15 +38,24 @@ fun getImagesByCategory(kategori: String): String? {
 
     // TODO UPDATE KATEGORI
     val kategoriA = arrayListOf("RIA", "RAI", "IAR", "IRA", "AIR", "ARI")
-    val kategoriB = arrayListOf("RIS", "RSI", "SRI", "SIR", "IRS", "ISR")
-    val kategoriC = arrayListOf("RIE", "REI", "IRE", "IER", "EIR", "ERI")
+    val kategoriB = arrayListOf("RIS", "RSI", "SRI", "SIR", "IRS", "ISR",
+        "RCS", "RSC", "CRS", "CSR", "SRC", "SCR",
+        "ISE", "IES", "SIE", "SEI", "EIS", "ESI")
+    val kategoriC = arrayListOf("RIE", "REI", "IRE", "IER", "EIR", "ERI",
+        "REC", "RCE", "ERC", "ECR", "CRE", "CER")
     val kategoriD = arrayListOf("RIC", "RCI", "ICR", "IRC", "CRI", "CIR")
-    val kategoriE = arrayListOf("IAS", "ISA", "ASI", "AIS", "SIA", "SAI")
+    val kategoriE = arrayListOf("IAS", "ISA", "ASI", "AIS", "SIA", "SAI",
+        "RSE", "RES", "SER", "SRE", "ERS", "ESR",
+        "ISC", "ICS", "SIC", "SCI", "CIS", "CSI")
     val kategoriF = arrayListOf("IAE", "IEA", "AEI", "AIE", "EIA", "EAI")
     val kategoriG = arrayListOf("IAC", "ICA", "ACI", "AIC", "CIA", "CAI")
-    val kategoriH = arrayListOf("ASE", "AES", "SEA", "SAE", "EAS", "ESA")
-    val kategoriI = arrayListOf("ASC", "ACS", "SCA", "SAC", "CAS", "CSA")
-    val kategoriJ = arrayListOf("SEC", "SCE", "ECS", "ESC", "CSE", "CES")
+    val kategoriH = arrayListOf("ASE", "AES", "SEA", "SAE", "EAS", "ESA",
+        "RAC", "RCA", "ACR", "ARC", "CRA", "CAR")
+    val kategoriI = arrayListOf("ASC", "ACS", "SCA", "SAC", "CAS", "CSA",
+        "AEC", "ACE", "EAC", "ECA", "CAE", "CEA")
+    val kategoriJ = arrayListOf("SEC", "SCE", "ECS", "ESC", "CSE", "CES",
+        "RAE", "REA", "AER", "ARE", "EAR", "ERA",
+        "IEC", "ICE", "EIC", "ECI", "CIE", "CEI")
 
     var result = ""
 

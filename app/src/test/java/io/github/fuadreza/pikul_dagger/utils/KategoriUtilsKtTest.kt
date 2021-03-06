@@ -27,7 +27,7 @@ class KategoriUtilsKtTest {
 
     @Test
     fun testGetImageByCategory(){
-        val kategori = "ARE"
+        val kategori = "CAR"
 
         assertEquals(
             getImagesByCategory(kategori), "k2.png"

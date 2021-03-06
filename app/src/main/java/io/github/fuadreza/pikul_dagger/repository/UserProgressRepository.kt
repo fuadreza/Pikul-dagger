@@ -1,8 +1,11 @@
 package io.github.fuadreza.pikul_dagger.repository
 
 import androidx.lifecycle.LiveData
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
 import io.github.fuadreza.pikul_dagger.data.local.dao.UserProgressDao
 import io.github.fuadreza.pikul_dagger.data.local.entity.UserProgress
 import javax.inject.Inject
@@ -17,5 +20,9 @@ class UserProgressRepository @Inject constructor(private val userProgressDao: Us
 
     fun getUserProgress(uid: String): DocumentReference {
         return firestore.collection("user_score").document(uid)
+    }
+
+    fun getRecommendationByKategori(kategori: String): Task<QuerySnapshot> {
+        return firestore.collection("rekomendasi").whereEqualTo("kode", kategori).get()
     }
 }

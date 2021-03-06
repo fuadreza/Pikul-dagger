@@ -1,15 +1,20 @@
 package io.github.fuadreza.pikul_dagger.views.tes.hasil_tes
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.model.JawabanUser
+import io.github.fuadreza.pikul_dagger.model.RekomendasiJurusan
+import io.github.fuadreza.pikul_dagger.utils.getImagesByCategory
 import io.github.fuadreza.pikul_dagger.utils.getKategoriCode
 import kotlinx.android.synthetic.main.activity_hasil_tes.*
+import java.io.IOException
 
 //TODO Hasil Tes
 // [v] Halaman Hasil Tes
@@ -24,8 +29,6 @@ class HasilTesActivity : AppCompatActivity() {
     private val viewModel: HasilTesViewModel by viewModels()
 
     private var userId: String? = null
-
-    private var userKategoriCode: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,15 +53,43 @@ class HasilTesActivity : AppCompatActivity() {
         }
         viewModel.userProgress.observe(this) { progress ->
             setupScore(progress)
-            userKategoriCode = getKategoriCode(progress.skor_kat)
-            Log.d("KATT", "kategori: $userKategoriCode")
+            val userKategoriCode = getKategoriCode(progress.skor_kat)
+            viewModel.fetchUserKategori(userKategoriCode.toString())
+            setupImagesByKategori(getImagesByCategory(userKategoriCode.toString()))
         }
     }
 
-    private fun observeRekomendasi() {
-        viewModel.userKategori.observe(this){
+    private fun setupImagesByKategori(images: String?) {
+        try {
+            val inputStream = assets.open(images.toString())
+            val drawable = Drawable.createFromStream(inputStream, null)
 
+            Glide.with(this)
+                .load(drawable)
+                .into(iv_illustration)
+
+            inputStream.close()
+        }catch (e: IOException){
+            return
         }
+
+    }
+
+    private fun observeRekomendasi() {
+        viewModel.userRekomendasi.observe(this){
+            setupRekomendasi(it)
+        }
+    }
+
+    private fun setupRekomendasi(rekomendasi: ArrayList<RekomendasiJurusan>) {
+        var rekomendasiJurusan = ""
+
+        rekomendasi.forEachIndexed {index, value ->
+            rekomendasiJurusan += if(index<rekomendasi.size) "$value, "
+            else "$value"
+        }
+
+        tv_rekomendasi_jurusan.text = rekomendasiJurusan
     }
 
     private fun btnHandler() {
