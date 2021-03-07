@@ -2,7 +2,6 @@ package io.github.fuadreza.pikul_dagger.views.tes.detail_tes
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +10,6 @@ import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.fuadreza.pikul_dagger.R
-import io.github.fuadreza.pikul_dagger.model.JawabanUser
 import io.github.fuadreza.pikul_dagger.model.SoalTes
 import io.github.fuadreza.pikul_dagger.views.tes.TesAdapter
 import io.github.fuadreza.pikul_dagger.views.tes.model.Tes
@@ -45,11 +43,11 @@ class DetailTesActivity : AppCompatActivity() {
 
     private lateinit var tes: Tes
 
-    private var skor: Int? = null
+    private var skor: Int = 0
 
     private var userId: String? = null
 
-    private var list_skor: ArrayList<Int>? = arrayListOf()
+    private var list_skor: ArrayList<Int> = arrayListOf(0, 0, 0, 0, 0, 0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -57,11 +55,13 @@ class DetailTesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail_tes)
         supportActionBar?.hide()
 
-        list_skor = arrayListOf(0, 0, 0, 0, 0, 0)
         intent?.let {
             userId = it.getStringExtra(TesAdapter.EXTRA_UID)
             tes = it.getSerializableExtra(TesAdapter.EXTRA_TES) as Tes
-            list_skor = it.getIntegerArrayListExtra(TesAdapter.EXTRA_SKOR)
+            it.getIntegerArrayListExtra(TesAdapter.EXTRA_SKOR)?.let {list ->
+                list_skor = list
+            }
+
         }
 
         lifecycle.addObserver(detailTesViewModel)
@@ -87,6 +87,7 @@ class DetailTesActivity : AppCompatActivity() {
                         detailTesViewModel.getSoalById(it)
                     }
                 } else {
+                    btnLanjut.setBackgroundColor(Color.parseColor("#aaaaaa"))
                     saveLastScore()
                     btnLanjut.isClickable = false
 //                    finish()
@@ -114,8 +115,7 @@ class DetailTesActivity : AppCompatActivity() {
                     finish()
                 }
                 is DetailTesState.LoadingState -> {
-                    btnLanjut.setBackgroundColor(Color.parseColor("#111111"))
-                    Log.d("LOADING STATE", "LOADINGSTATE")
+                    btnLanjut.setBackgroundColor(Color.parseColor("#aaaaaa"))
                     loading.visibility = View.VISIBLE
                     loading.show()
                 }
@@ -148,47 +148,35 @@ class DetailTesActivity : AppCompatActivity() {
     private fun saveLastScore() {
         if (!list_skor.isNullOrEmpty()) {
             when (tes.type) {
-                "1" -> {
-                    skor?.let {
-                        list_skor!![0] = it
-                    }
+                "R" -> {
+                    list_skor[0] = skor
+
                 }
-                "2" -> {
-                    skor?.let {
-                        list_skor!![1] = it
-                    }
+                "I" -> {
+                    list_skor[1] = skor
                 }
-                "3" -> {
-                    skor?.let {
-                        list_skor!![2] = it
-                    }
+                "A" -> {
+                    list_skor[2] = skor
                 }
-                "4" -> {
-                    skor?.let {
-                        list_skor!![3] = it
-                    }
+                "S" -> {
+                    list_skor[3] = skor
                 }
-                "5" -> {
-                    skor?.let {
-                        list_skor!![4] = it
-                    }
+                "E" -> {
+                    list_skor[4] = skor
                 }
-                "6" -> {
-                    skor?.let {
-                        list_skor!![5] = it
-                    }
+                "C" -> {
+                    list_skor[5] = skor
                 }
                 else -> {
                 }
             }
-            list_skor?.let {
-                detailTesViewModel.saveUserScore(JawabanUser(userId.toString(), it))
+            list_skor.let {
+                detailTesViewModel.saveUserScore(it)
             }
         }
     }
 
     private fun onLoadTes(soalTes: SoalTes?) {
-//        Log.d("HELLO WORLD", "DATA RECEIVED : $soalList")
         soalTes?.let {
             tvSoal.text = soalTes.soal
         }

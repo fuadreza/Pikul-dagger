@@ -44,7 +44,7 @@ class TesViewModel @ViewModelInject constructor(private val repo: UserProgressRe
     }
 
     private fun fetchUser(){
-        _userId.value = userRepository.user?.uid
+        _userId.value = userRepository.getUserId()
     }
 
     fun fetchUserProgress(uid: String) {
@@ -77,7 +77,7 @@ class TesViewModel @ViewModelInject constructor(private val repo: UserProgressRe
     }
 
     fun resetJawaban(uid: String) {
-        soalRepository.saveUserScore(JawabanUser(uid, arrayListOf(0,0,0,0,0,0)))
+        soalRepository.saveUserScore(arrayListOf(0,0,0,0,0,0))
             .addOnSuccessListener {
 
             }
