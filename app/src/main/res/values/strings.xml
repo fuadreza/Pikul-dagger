@@ -1,22 +1,51 @@
 <resources>
     <string name="app_name">Pikul</string>
 
+    <!-- TITLE -->
     <string name="title_tes">Tes Penjurusan</string>
     <string name="title_univ">Universitas</string>
     <string name="title_profile">Profil</string>
+    <string name="title_login">Masuk</string>
+    <string name="register_header">Daftar dulu yuk!</string>
+    <string name="skor">Skor</string>
 
+    <!-- BASIC BUTTON -->
     <string name="cari_univ">Cari Universitas</string>
+    <string name="sign_in">Masuk</string>
+    <string name="register">Daftar</string>
+    <string name="google">Google</string>
+
+    <!-- BASIC LABEL -->
+    <string name="have_an_account">Sudah punya akun?</string>
+    <string name="dont_have_account">Belum punya akun? Daftar disini</string>
 
     <string name="rekomendasi_jurusan">Rekomendasi Jurusan</string>
     <string name="content_description">Gambar</string>
-    <string name="title_login">Login</string>
-    <string name="google">Google</string>
-    <string name="label_min">Sangat Tidak Suka</string>
-    <string name="label_max">Sangat Suka</string>
-    <string name="perhatian">Perhatian!</string>
+
+    <!-- TES SCREEN -->
     <string name="warning_msg">Persiapkan waktu luang untuk mengerjakan tes dengan teliti dan sesuai dengan keadaan yang sebenarnya.</string>
+    <string name="perhatian">Perhatian!</string>
     <string name="estimasi">(Estimasi pengerjaan tes 15 menit)</string>
     <string name="mengerti">YA SAYA MENGERTI</string>
+    <string name="label_min">Sangat Tidak Suka</string>
+    <string name="label_max">Sangat Suka</string>
     <string name="retake_tes">Retake Tes</string>
     <string name="hasil_tes">Hasil Tes</string>
+
+    <!-- LOGIN & REGISTER SCREEN -->
+    <string name="password_confirm">Konfirmasi Password</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="last_name">Nama Belakang</string>
+    <string name="first_name">Nama Depan</string>
+    <string name="loading_name">Loading Name...</string>
+    <string name="loading_email">Loading Email...</string>
+    <string name="selesaikan_tes">Selesaikan tes terlebih dahulu</string>
+    <string name="realistic">Realistic</string>
+    <string name="investigative">Investigative</string>
+    <string name="artistic">Artistic</string>
+    <string name="social">Social</string>
+    <string name="enterprising">Enterprising</string>
+    <string name="conventional">Conventional</string>
+
 </resources>

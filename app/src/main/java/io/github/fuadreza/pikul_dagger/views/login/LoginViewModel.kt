@@ -2,9 +2,8 @@ package io.github.fuadreza.pikul_dagger.views.login
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.google.firebase.auth.FirebaseAuthException
 import io.github.fuadreza.pikul_dagger.repository.UserRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 
@@ -33,45 +32,36 @@ class LoginViewModel @ViewModelInject constructor(private val userRepository: Us
     }
 
     fun login(email: String, password: String) {
-        /*if (userManager.loginUser(email, password)) {
-            _loginState.value = LoginViewState.LoginSuccess
-        } else {
-            _loginState.value = LoginViewState.LoginError
-        }*/
-
-//        userManager.loginUser(email, password)
 
         _loginState.value = LoginState.IsLoading(true)
 
         if (validate(email, password)) {
-            CoroutineScope(IO).launch {
-                userRepository.login(email, password)
-            }
-            if (userRepository.status == "success") {
-                _loginState.value = LoginState.IsLoggedIn
-            } else {
-                _loginState.value = LoginState.LoginError
-            }
-
-            /*FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener {
-                    Log.d("LOGIN", "Login in...")
-                }
+            userRepository.login(email, password)
                 .addOnSuccessListener {
-                    Log.d("LOGIN", "Success Login")
-                    _loginState.value = LoginState.LoginSuccess
-                    userRepository.user = it.user
+                    _loginState.value = LoginState.IsLoggedIn
                 }
                 .addOnFailureListener {
-                    Log.d("LOGIN", "Failed Login: ${it.message}")
-                    _loginState.value = LoginState.ShowToast("Email atau Password salah")
-                    _loginState.value = LoginState.LoginError
-                }*/
+                    val errorCode = (it as FirebaseAuthException?)?.errorCode
+                    var message = ""
+                    when (errorCode) {
+                        "ERROR_INVALID_EMAIL" -> {
+                            message = "Email salah"
+                        }
+                        "ERROR_WRONG_PASSWORD" -> {
+                            message = "Password salah"
+                        }
+                        "ERROR_USER_NOT_FOUND" -> {
+                            message = "User tidak terdaftar"
+                        }
+                        else -> {
+                            message = "Email atau password tidak tepat"
+                        }
+                    }
+                    _loginState.value = LoginState.LoginError(message)
+                    _loginState.value = LoginState.IsLoading(false)
+                }
 
-//            userRepository.userJustLoggedIn()
         }
-
-        _loginState.value = LoginState.IsLoading(false)
 
     }
 
@@ -88,7 +78,6 @@ class LoginViewModel @ViewModelInject constructor(private val userRepository: Us
         return true
     }
 
-    //fun getUser(): FirebaseUse r? = userManager.user
 }
 
 

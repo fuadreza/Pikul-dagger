@@ -52,6 +52,7 @@ class TesViewModel @ViewModelInject constructor(private val repo: UserProgressRe
             repo.getUserProgress(uid)
                 .addSnapshotListener(EventListener<DocumentSnapshot> {value, error ->
                     if (error != null){
+
                         return@EventListener
                     }
                     try {

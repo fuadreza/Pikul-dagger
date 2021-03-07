@@ -1,23 +1,28 @@
 package io.github.fuadreza.pikul_dagger.repository
 
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import io.github.fuadreza.pikul_dagger.model.UserProfile
+import javax.inject.Inject
 
 /**
  * Dibuat dengan kerjakerasbagaiquda oleh Shifu pada tanggal 24/06/2020.
  *
  */
 
-class UserRepository {
+class UserRepository @Inject constructor(private val auth: FirebaseAuth, private val db: FirebaseFirestore) {
 
-    private val firebaseAuth = FirebaseAuth.getInstance()
-
-    var user: FirebaseUser? = firebaseAuth.currentUser
+    var user: FirebaseUser? = auth.currentUser
 
     var status: String = ""
 
     var registerStatus: String = ""
+
+    var uid: String = ""
 
     fun isUserLoggedIn(): Boolean {
         return user != null
@@ -27,36 +32,27 @@ class UserRepository {
 //        userComponent = userComponentFactory.create()
     }
 
-    suspend fun login(email: String, password: String) {
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                user = it.user
-                status = "success"
-            }
-            .addOnFailureListener {
-                status = "Failed Login, ${it.message}"
-            }
+    fun login(email: String, password: String): Task<AuthResult>{
+        return FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
     }
 
-    suspend fun register(name: String, email: String, password: String) {
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                val user = FirebaseAuth.getInstance().currentUser
-                val profileUpdate = UserProfileChangeRequest.Builder()
-                    .setDisplayName(name)
-                    .build()
+    fun register(name: String, email: String, password: String): Task<AuthResult> {
+        return FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+    }
 
-                user?.updateProfile(profileUpdate)
-                registerStatus = "success"
-            }
-            .addOnFailureListener {
-                registerStatus = "failed"
-            }
+    fun saveUserData(userProfile: UserProfile) : Task<Void>{
+        val user = auth.currentUser
+        return db.collection("users").document(user?.uid.toString()).set(UserProfile(user?.uid, userProfile.firstName, userProfile.lastName, userProfile.email, userProfile.urlPic))
     }
 
     fun logoutUser() {
-        firebaseAuth.signOut()
+        auth.signOut()
         user = null
+    }
+
+    fun getUserProfile() : DocumentReference {
+        val user = auth.currentUser
+        return db.collection("users").document(user?.uid.toString())
     }
 }
 
