@@ -20,8 +20,8 @@ import java.io.IOException
 // [v] Halaman Hasil Tes
 // [v] Get User Score
 // [v] Sort top 3 kategori
-// [ ] Get recommendation based on top 3
-// [ ] Display recommendation
+// [v] Get recommendation based on top 3
+// [v] Display recommendation
 
 @AndroidEntryPoint
 class HasilTesActivity : AppCompatActivity() {
@@ -55,6 +55,7 @@ class HasilTesActivity : AppCompatActivity() {
             setupScore(progress)
             val userKategoriCode = getKategoriCode(progress.skor_kat)
             viewModel.fetchUserKategori(userKategoriCode.toString())
+
             setupImagesByKategori(getImagesByCategory(userKategoriCode.toString()))
         }
     }
@@ -63,20 +64,22 @@ class HasilTesActivity : AppCompatActivity() {
         try {
             val inputStream = assets.open(images.toString())
             val drawable = Drawable.createFromStream(inputStream, null)
+//            Log.d("GAMBAR", "IMAGES: ${drawable}")
 
             Glide.with(this)
                 .load(drawable)
                 .into(iv_illustration)
 
             inputStream.close()
-        }catch (e: IOException){
+        } catch (e: IOException) {
+//            Log.d("GAMBAR", "IMAGES: error")
             return
         }
 
     }
 
     private fun observeRekomendasi() {
-        viewModel.userRekomendasi.observe(this){
+        viewModel.userRekomendasi.observe(this) {
             setupRekomendasi(it)
         }
     }
@@ -84,9 +87,16 @@ class HasilTesActivity : AppCompatActivity() {
     private fun setupRekomendasi(rekomendasi: ArrayList<RekomendasiJurusan>) {
         var rekomendasiJurusan = ""
 
-        rekomendasi.forEachIndexed {index, value ->
-            rekomendasiJurusan += if(index<rekomendasi.size) "$value, "
-            else "$value"
+        if (!rekomendasi.isNullOrEmpty()) {
+            rekomendasi[0].rekomendasi.let {
+                if (it[0].isNullOrEmpty())
+                    rekomendasiJurusan += "Tidak ditemukan jurusan yang cocok"
+                else
+                    it.forEachIndexed { index, value ->
+                        rekomendasiJurusan += if (index == 0) "$value"
+                        else ", $value"
+                    }
+            }
         }
 
         tv_rekomendasi_jurusan.text = rekomendasiJurusan
