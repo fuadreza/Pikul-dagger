@@ -13,4 +13,24 @@ class KategoriUtilsKtTest {
             getKategoriCode(score), "RIS"
         )
     }
+
+    @Test
+    fun testContainWords(){
+        val words: ArrayList<String> = arrayListOf("hello", "well", "ops", "kim", "pool", "like")
+
+        val text = "kim"
+
+        assertEquals(
+            containWords(text, words), true
+        )
+    }
+
+    @Test
+    fun testGetImageByCategory(){
+        val kategori = "CAR"
+
+        assertEquals(
+            getImagesByCategory(kategori), "k2.png"
+        )
+    }
 }

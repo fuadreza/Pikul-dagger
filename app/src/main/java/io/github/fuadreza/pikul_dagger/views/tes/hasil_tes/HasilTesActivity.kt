@@ -1,22 +1,29 @@
 package io.github.fuadreza.pikul_dagger.views.tes.hasil_tes
 
+import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
+import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.model.JawabanUser
+import io.github.fuadreza.pikul_dagger.model.RekomendasiJurusan
+import io.github.fuadreza.pikul_dagger.utils.getImagesByCategory
 import io.github.fuadreza.pikul_dagger.utils.getKategoriCode
+import io.github.fuadreza.pikul_dagger.views.main.HomeActivity
 import kotlinx.android.synthetic.main.activity_hasil_tes.*
+import java.io.IOException
 
 //TODO Hasil Tes
 // [v] Halaman Hasil Tes
 // [v] Get User Score
 // [v] Sort top 3 kategori
-// [ ] Get recommendation based on top 3
-// [ ] Display recommendation
+// [v] Get recommendation based on top 3
+// [v] Display recommendation
 
 @AndroidEntryPoint
 class HasilTesActivity : AppCompatActivity() {
@@ -24,8 +31,6 @@ class HasilTesActivity : AppCompatActivity() {
     private val viewModel: HasilTesViewModel by viewModels()
 
     private var userId: String? = null
-
-    private var userKategoriCode: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,19 +55,64 @@ class HasilTesActivity : AppCompatActivity() {
         }
         viewModel.userProgress.observe(this) { progress ->
             setupScore(progress)
-            userKategoriCode = getKategoriCode(progress.skor_kat)
-            Log.d("KATT", "kategori: $userKategoriCode")
+            val userKategoriCode = getKategoriCode(progress.skor_kat)
+            viewModel.fetchUserKategori(userKategoriCode.toString())
+
+            setupImagesByKategori(getImagesByCategory(userKategoriCode.toString()))
         }
+    }
+
+    private fun setupImagesByKategori(images: String?) {
+        try {
+            val inputStream = assets.open("images/${images.toString()}")
+            val drawable = Drawable.createFromStream(inputStream, null)
+//            Log.d("GAMBAR", "IMAGES: ${drawable}")
+
+            Glide.with(this)
+                .load(drawable)
+                .into(iv_illustration)
+
+            inputStream.close()
+        } catch (e: IOException) {
+//            Log.d("GAMBAR", "IMAGES: error")
+            return
+        }
+
     }
 
     private fun observeRekomendasi() {
-        viewModel.userKategori.observe(this){
-
+        viewModel.userRekomendasi.observe(this) {
+            setupRekomendasi(it)
         }
     }
 
-    private fun btnHandler() {
+    private fun setupRekomendasi(rekomendasi: ArrayList<RekomendasiJurusan>) {
+        var rekomendasiJurusan = ""
 
+        if (!rekomendasi.isNullOrEmpty()) {
+            rekomendasi[0].rekomendasi.let {
+                if (it[0].isNullOrEmpty())
+                    rekomendasiJurusan += "Tidak ditemukan jurusan yang cocok"
+                else
+                    it.forEachIndexed { index, value ->
+                        rekomendasiJurusan += if (index == 0) "$value"
+                        else ", $value"
+                    }
+            }
+        }
+
+        tv_rekomendasi_jurusan.text = rekomendasiJurusan
+    }
+
+    private fun btnHandler() {
+        btn_home.setOnClickListener {
+            val intent =Intent(this, HomeActivity::class.java)
+            intent.apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intent)
+        }
     }
 
     private fun setupScore(score: JawabanUser) {

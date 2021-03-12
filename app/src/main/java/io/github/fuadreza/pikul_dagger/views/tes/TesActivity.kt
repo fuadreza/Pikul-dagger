@@ -36,7 +36,7 @@ import kotlinx.android.synthetic.main.activity_tes.*
 // [v] Checked for answered tes
 // [v] Re-test button
 // [v] Re-test function
-// [ ] Hasil tes route
+// [v] Hasil tes route
 
 @AndroidEntryPoint
 class TesActivity : AppCompatActivity() {

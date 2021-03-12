@@ -6,6 +6,9 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
+int MILLIS_IN_MINUTE = 1000 * 60
+int minutesSinceEpoch = System.currentTimeMillis() / MILLIS_IN_MINUTE
+
 android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
@@ -30,12 +33,58 @@ android {
         }
     }
 
+    // Specifies the flavor dimensions you want to use. The order in which you
+    // list each dimension determines its priority, from highest to lowest,
+    // when Gradle merges variant sources and configurations. You must assign
+    // each product flavor you configure to one of the flavor dimensions.
+
     buildTypes {
+        debug {
+            ext.enableCrashlytics = false
+            debuggable true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "stage"
+
+    productFlavors {
+        dev {
+            dimension "stage"
+            //noinspection DevModeObsolete
+            minSdkVersion 21
+            versionNameSuffix "-dev"
+//            applicationIdSuffix '.dev'
+            resConfigs "en", "xxhdpi"
+        }
+
+        prod {
+            dimension "stage"
+            minSdkVersion 21
+            versionNameSuffix "-prod"
+//            applicationIdSuffix '.prod'
+        }
+    }
+
+    // The defaultConfig values above are fixed, so your incremental builds don't
+    // need to rebuild the manifest (and therefore the whole APK, slowing build times).
+    // But for release builds, it's okay. So the following script iterates through
+    // all the known variants, finds those that are "release" build types, and
+    // changes those properties to something dynamic.
+    applicationVariants.all { variant ->
+        if (variant.buildType.name == "release") {
+            variant.outputs.each { output ->
+                output.versionCodeOverride = minutesSinceEpoch;
+                output.versionNameOverride = minutesSinceEpoch + "-" + variant.flavorName;
+            }
+//            variant.mergedFlavor.versionCode = minutesSinceEpoch;
+//            variant.mergedFlavor.versionName = minutesSinceEpoch + "-" + variant.flavorName;
+        }
+    }
+
 
     packagingOptions {
         exclude 'META-INF/atomicfu.kotlin_module'

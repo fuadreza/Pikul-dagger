@@ -32,7 +32,7 @@ object AppModule {
     fun provideUnivFirestore() = UnivFirestore()
 
     @Provides
-    fun provideSoalRepository() = SoalRepository()
+    fun provideSoalRepository(auth: FirebaseAuth) = SoalRepository(auth)
 
     @Provides
     fun providesUserProgressDao(@ApplicationContext appContext: Context): UserProgressDao {

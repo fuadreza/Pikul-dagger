@@ -9,9 +9,9 @@ import com.google.gson.annotations.SerializedName
  */
 
 data class SoalTes(
-    @SerializedName("id_soal")
-    var id_soal: String? = "",
-    @SerializedName("kategoti")
+    @SerializedName("id")
+    var id: String? = "",
+    @SerializedName("kategori")
     var kategori: String? = "",
     @SerializedName("rasio")
     var rasio: String? = "",
