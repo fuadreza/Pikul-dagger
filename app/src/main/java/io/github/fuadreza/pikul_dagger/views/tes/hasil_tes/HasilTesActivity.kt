@@ -1,5 +1,6 @@
 package io.github.fuadreza.pikul_dagger.views.tes.hasil_tes
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import io.github.fuadreza.pikul_dagger.model.JawabanUser
 import io.github.fuadreza.pikul_dagger.model.RekomendasiJurusan
 import io.github.fuadreza.pikul_dagger.utils.getImagesByCategory
 import io.github.fuadreza.pikul_dagger.utils.getKategoriCode
+import io.github.fuadreza.pikul_dagger.views.main.HomeActivity
 import kotlinx.android.synthetic.main.activity_hasil_tes.*
 import java.io.IOException
 
@@ -62,7 +64,7 @@ class HasilTesActivity : AppCompatActivity() {
 
     private fun setupImagesByKategori(images: String?) {
         try {
-            val inputStream = assets.open(images.toString())
+            val inputStream = assets.open("images/${images.toString()}")
             val drawable = Drawable.createFromStream(inputStream, null)
 //            Log.d("GAMBAR", "IMAGES: ${drawable}")
 
@@ -103,7 +105,14 @@ class HasilTesActivity : AppCompatActivity() {
     }
 
     private fun btnHandler() {
-
+        btn_home.setOnClickListener {
+            val intent =Intent(this, HomeActivity::class.java)
+            intent.apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intent)
+        }
     }
 
     private fun setupScore(score: JawabanUser) {
