@@ -13,7 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.fuadreza.pikul_dagger.R
 import io.github.fuadreza.pikul_dagger.views.main.profile.ProfileFragment
-import io.github.fuadreza.pikul_dagger.views.main.tes.TesFragment
+import io.github.fuadreza.pikul_dagger.views.main.tes.HomeTesFragment
 import io.github.fuadreza.pikul_dagger.views.main.tes.TesFragmentDirections
 import io.github.fuadreza.pikul_dagger.views.main.univ.UnivFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -76,7 +76,7 @@ class HomeActivity : AppCompatActivity(), LifecycleOwner {
             when (item.itemId) {
                 R.id.tesFragment -> {
                     TesFragmentDirections.actionTesFragmentToUnivFragment()
-                    replaceFragment(TesFragment())
+                    replaceFragment(HomeTesFragment())
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.univFragment -> {

@@ -6,7 +6,7 @@
     app:startDestination="@id/tesFragment">
     <fragment
         android:id="@+id/tesFragment"
-        android:name="io.github.fuadreza.pikul_dagger.views.main.tes.TesFragment"
+        android:name="io.github.fuadreza.pikul_dagger.views.main.tes.HomeTesFragment"
         tools:layout="@layout/fragment_test"
         android:label="TesFragment" >
         <action
