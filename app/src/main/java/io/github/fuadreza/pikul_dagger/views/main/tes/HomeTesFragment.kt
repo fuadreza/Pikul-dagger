@@ -48,14 +48,13 @@ class HomeTesFragment : Fragment(), LifecycleOwner {
         super.onViewCreated(view, savedInstanceState)
 
         setupViews()
-
-
     }
 
     private fun setupViews() {
         btn_tes.setOnClickListener {
             startActivity(Intent(activity, TesWarningActivity::class.java))
         }
+        scoreContainerEnabled(false)
     }
 
     override fun onResume() {
@@ -83,9 +82,22 @@ class HomeTesFragment : Fragment(), LifecycleOwner {
 
     private fun setupRekomendasi(listRekomendasi: ArrayList<RekomendasiJurusan>) {
         //TODO display rekomendasi jurusan in list
+        scoreContainerEnabled(true)
     }
 
     private fun setupScore(progress: JawabanUser) {
         //TODO Display score on bar and number
+    }
+
+    private fun scoreContainerEnabled(state: Boolean){
+        if(state){
+            rv_score.visibility = View.VISIBLE
+            tv_tes_jurusan.visibility = View.GONE
+            iv_icon_kerjakan.visibility = View.GONE
+        }else {
+            rv_score.visibility = View.GONE
+            tv_tes_jurusan.visibility = View.VISIBLE
+            iv_icon_kerjakan.visibility = View.VISIBLE
+        }
     }
 }
