@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class HomeTesViewModel @ViewModelInject constructor(private val userProgressRepository: UserProgressRepository) :
-    ViewModel() {
+    ViewModel(), LifecycleObserver {
 
     private val _userProgress = MutableLiveData<JawabanUser>()
     val userProgress: LiveData<JawabanUser> = _userProgress
