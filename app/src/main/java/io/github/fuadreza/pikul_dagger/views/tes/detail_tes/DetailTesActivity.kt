@@ -2,6 +2,7 @@ package io.github.fuadreza.pikul_dagger.views.tes.detail_tes
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -47,7 +48,7 @@ class DetailTesActivity : AppCompatActivity() {
 
     private var userId: String? = null
 
-    private var list_skor: ArrayList<Int> = arrayListOf(0, 0, 0, 0, 0, 0)
+    private var list_skor: ArrayList<Int> = arrayListOf(1, 0, 0, 0, 0, 0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -59,7 +60,8 @@ class DetailTesActivity : AppCompatActivity() {
             userId = it.getStringExtra(TesAdapter.EXTRA_UID)
             tes = it.getSerializableExtra(TesAdapter.EXTRA_TES) as Tes
             it.getIntegerArrayListExtra(TesAdapter.EXTRA_SKOR)?.let {list ->
-                list_skor = list
+                if(!list.isNullOrEmpty())
+                    list_skor = list
             }
 
         }
@@ -150,7 +152,6 @@ class DetailTesActivity : AppCompatActivity() {
             when (tes.type) {
                 "R" -> {
                     list_skor[0] = skor
-
                 }
                 "I" -> {
                     list_skor[1] = skor
@@ -170,6 +171,7 @@ class DetailTesActivity : AppCompatActivity() {
                 else -> {
                 }
             }
+            Log.d("SINI", "SaVE ")
             list_skor.let {
                 detailTesViewModel.saveUserScore(it)
             }

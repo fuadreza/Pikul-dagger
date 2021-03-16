@@ -3,6 +3,8 @@ package io.github.fuadreza.pikul_dagger.views.main.tes
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
@@ -25,17 +27,19 @@ class HomeTesViewModel @ViewModelInject constructor(private val userProgressRepo
     fun fetchUserProgress(){
         viewModelScope.launch(IO) {
             userProgressRepository.getUserProgress()
-                .addSnapshotListener { value, error ->
+                .addSnapshotListener (EventListener<DocumentSnapshot> { value, error ->
                     if(error != null){
-                        return@addSnapshotListener
+                        return@EventListener
                     }
 
                     try {
-                        _userProgress.value = value?.toObject<JawabanUser>()
+                        if(value?.data != null){
+                            _userProgress.value = value.toObject<JawabanUser>()
+                        }
                     }catch (e: FirebaseFirestoreException){
-
+                        e.printStackTrace()
                     }
-                }
+                })
         }
     }
 

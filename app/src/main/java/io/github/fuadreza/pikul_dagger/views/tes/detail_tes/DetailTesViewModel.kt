@@ -1,5 +1,6 @@
 package io.github.fuadreza.pikul_dagger.views.tes.detail_tes
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.google.firebase.firestore.DocumentSnapshot
@@ -68,6 +69,7 @@ class DetailTesViewModel @ViewModelInject constructor(private val repo: SoalRepo
     }
 
     fun saveUserScore(jawabanUser: ArrayList<Int>) {
+        Log.d("SINI", "SAVE")
         savedScoreState.value = DetailTesState.LoadingState
         repo.saveUserScore(jawabanUser)
             .addOnSuccessListener {
