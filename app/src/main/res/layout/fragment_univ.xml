@@ -32,7 +32,7 @@
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="@id/panel" />
 
-    <androidx.appcompat.widget.SearchView
+    <!--<androidx.appcompat.widget.SearchView
         android:id="@+id/search_univ"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         android:background="@drawable/rounded"
         android:elevation="2dp"
         app:layout_constraintTop_toBottomOf="@id/margin_panel"
-        app:queryHint="@string/cari_univ" />
+        app:queryHint="@string/cari_univ" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_universitas"
@@ -52,7 +52,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginRight="@dimen/panel_16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintTop_toBottomOf="@id/search_univ"
+        app:layout_constraintTop_toBottomOf="@id/panel"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/item_univ"/>
 
