@@ -23,8 +23,11 @@
     <string name="content_description">Gambar</string>
 
     <!-- TES SCREEN -->
+    <string name="pendahuluan_tes">Tes Rekomendasi Jurusan ini disusun berdasarkan teori tes kepribadian John Holland yang berisi 6 tipe peminatan untuk membantu kamu menemukan karir/jurusan yang tepat</string>
     <string name="warning_msg">Persiapkan waktu luang untuk mengerjakan tes dengan teliti dan sesuai dengan keadaan yang sebenarnya.</string>
     <string name="perhatian">Perhatian!</string>
+    <string name="sekilas">Sekilas tentang tes</string>
+    <string name="tes_sekarang">Tes Sekarang</string>
     <string name="estimasi">(Estimasi pengerjaan tes 15 menit)</string>
     <string name="mengerti">YA SAYA MENGERTI</string>
     <string name="label_min">Sangat Tidak Suka</string>
@@ -47,5 +50,7 @@
     <string name="social">Social</string>
     <string name="enterprising">Enterprising</string>
     <string name="conventional">Conventional</string>
+    <string name="kerjakan_tes">Kerjakan tes terlebih dahulu</string>
+    <string name="jurusan_yang_cocok">Jurusan yang cocok untuk kamu</string>
 
 </resources>

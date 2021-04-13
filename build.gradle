@@ -41,3 +41,7 @@ ext {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+static def gitSha() {
+    return 'git rev-parse --short HEAD'.execute().text.trim()
+}

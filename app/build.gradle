@@ -19,8 +19,21 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        versionNameSuffix "-${gitSha()}"
+        setProperty("archivesBaseName", "pikul-"+versionName+versionNameSuffix)
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        appDefault {
+            keyAlias "key0"
+            keyPassword "12345678"
+            storeFile file('ytc.jks')
+            storePassword "12345678"
+        }
     }
 
     sourceSets {
