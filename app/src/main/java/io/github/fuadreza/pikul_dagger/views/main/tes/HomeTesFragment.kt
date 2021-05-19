@@ -79,8 +79,10 @@ class HomeTesFragment : Fragment(), LifecycleOwner {
         viewModel.userProgress.observe(this){userProgress ->
             userProgress.let {
                 setupScore(it)
-                val userKategoriSkor = getKategoriCode(userProgress.skor_kat)
-                viewModel.fetchRekomendasi(userKategoriSkor.toString())
+                if(userProgress.skor_kat[5] != 0 && userProgress.skor_kat[4] != 0 && userProgress.skor_kat[3] != 0) {
+                    val userKategoriSkor = getKategoriCode(userProgress.skor_kat)
+                    viewModel.fetchRekomendasi(userKategoriSkor.toString())
+                }
             }
         }
     }
