@@ -3,10 +3,10 @@ package io.github.fuadreza.pikul_dagger.utils
 import junit.framework.Assert.assertEquals
 import org.junit.Test
 
-class KategoriUtilsKtTest {
+class AppUnitTest {
 
     @Test
-    fun testKategoriUtils(){
+    fun testGetKategoriByScore(){
         val score = arrayListOf(40, 35, 25, 35, 35, 20)
 
         assertEquals(
@@ -15,7 +15,7 @@ class KategoriUtilsKtTest {
     }
 
     @Test
-    fun testContainWords(){
+    fun testKategoriKelompok(){
         val words: ArrayList<String> = arrayListOf("hello", "well", "ops", "kim", "pool", "like")
 
         val text = "kim"
@@ -30,7 +30,7 @@ class KategoriUtilsKtTest {
         val kategori = "CAR"
 
         assertEquals(
-            getImagesByCategory(kategori), "k2.png"
+            getImagesByCategory(kategori), "k8.png"
         )
     }
 }
