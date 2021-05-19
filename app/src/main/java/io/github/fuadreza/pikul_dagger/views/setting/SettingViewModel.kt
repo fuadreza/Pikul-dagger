@@ -1,5 +1,8 @@
 package io.github.fuadreza.pikul_dagger.views.setting
 
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.ViewModel
 import io.github.fuadreza.pikul_dagger.repository.UserRepository
 
 /**
@@ -7,7 +10,7 @@ import io.github.fuadreza.pikul_dagger.repository.UserRepository
  *
  */
 
-class SettingViewModel constructor(private var userRepository: UserRepository) {
+class SettingViewModel @ViewModelInject constructor(private val userRepository: UserRepository) : ViewModel(), LifecycleObserver{
 
     fun logout() {
         userRepository.logoutUser()

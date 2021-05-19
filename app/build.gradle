@@ -31,7 +31,7 @@ android {
         appDefault {
             keyAlias "key0"
             keyPassword "12345678"
-            storeFile file('ytc.jks')
+            storeFile file('private-key.jks')
             storePassword "12345678"
         }
     }
